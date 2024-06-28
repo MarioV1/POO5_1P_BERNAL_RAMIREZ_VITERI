@@ -1,4 +1,4 @@
-package GestorRevista;
+package gestorrevista;
 
 public class Articulo {
     public String codigo;

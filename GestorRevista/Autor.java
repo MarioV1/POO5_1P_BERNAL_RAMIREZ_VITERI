@@ -1,4 +1,4 @@
-package GestorRevista;
+package gestorrevista;
 
 public class Autor extends Usuario {
     //Atributos

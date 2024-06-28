@@ -1,4 +1,4 @@
-package GestorRevista;
+package gestorrevista;
 
 public class Revisor extends Usuario{
     //Variables de instancia

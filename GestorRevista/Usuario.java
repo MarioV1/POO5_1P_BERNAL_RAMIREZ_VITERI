@@ -1,4 +1,6 @@
-package GestorRevista;
+package gestorrevista;
+
+import java.util.ArrayList;
 
 public class Usuario {
     //Atributos
@@ -18,7 +20,19 @@ public class Usuario {
     }
     //Métodos 
     public void agregarUsuario(Usuario usuario){
-
+        ManejoArchivos.EscribirUsuario("Usuarios.txt", usuario);
+    }
+    public static ArrayList<Usuario> obtenerUsuarios(){
+        ArrayList<ArrayList<String>> datos = ManejoArchivos.obtenerDatos("Usuarios.txt");
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+        for (ArrayList<String> u : datos) {
+            String nombre = u.get(0);
+            String apellido=u.get(1);
+            String correo=u.get(3);
+            Usuario usuario=new Usuario(nombre,apellido,correo);    
+            usuarios.add(usuario);
+        }
+        return usuarios;
 
     }
 
