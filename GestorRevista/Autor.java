@@ -5,7 +5,15 @@ public class Autor extends Usuario {
     private String codigoID;
     private String institucion;
     private String campo;
+    
     //Constructor
+    public Autor(String nombre, String apellido, String correo,String codigoID, String institucion,String campo){
+        super(nombre,apellido,correo);
+        this.codigoID=codigoID;
+        this.institucion=institucion;
+        this.campo=campo;
+        
+    }
     public Autor(String codigoID, String institucion,String campo){
         this.codigoID=codigoID;
         this.institucion=institucion;

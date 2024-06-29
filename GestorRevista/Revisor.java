@@ -6,8 +6,17 @@ public class Revisor extends Usuario{
     private String usuario;
     private String contraseña;
     private int numArticulos;
-
+    
     //Constructor
+    public Revisor(String nombre, String apellido, String correo,String especialidad, String usuario, String contraseña, int numArticulos){
+        super(nombre,apellido,correo);
+        this.especialidad = especialidad;
+        this.usuario = usuario;
+        this.contraseña = contraseña;
+        this.numArticulos = numArticulos;
+    }
+
+
     public Revisor(String especialidad, String usuario, String contraseña, int numArticulos){
         this.especialidad = especialidad;
         this.usuario = usuario;

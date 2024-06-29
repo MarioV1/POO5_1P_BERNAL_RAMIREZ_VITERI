@@ -6,6 +6,12 @@ public class Editor extends Usuario {
     private String contraseña;
     
     //constructor
+    public Editor(String nombre, String apellido, String correo, String journal, String usuario, String contraseña){
+        super(nombre,apellido,correo);
+        this.journal = journal;
+        this.usuario = usuario;
+        this.contraseña = contraseña;
+    }
     public Editor(String journal, String usuario, String contraseña){
         this.journal = journal;
         this.usuario = usuario;
@@ -36,6 +42,12 @@ public class Editor extends Usuario {
     public void setContraseña(String contraseña){
         this.contraseña = contraseña;
     }
-
+    //Métodos
+    /*@Override
+    public boolean equals(Editor e){
+        if(e!=null && getClass()==e.getClass()){
+            
+        }
+    }*/
 
 }
