@@ -1,12 +1,7 @@
 package gestorrevista;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class Usuario {
@@ -26,7 +21,10 @@ public class Usuario {
         this.correo=correo;
     }
     //Métodos 
-    
+    /**
+     * @param nombreArchivo Nombre.extension del archivo que se desea leer
+     * @param usuario Usuario que se va escribir en el archivo (Debe ser obligatoriamente generado con downcasting)
+     */
 
     public static void EscribirUsuario(String nombreArchivo, Usuario usuario) {
 
@@ -83,6 +81,11 @@ public class Usuario {
             }
         }
     }
+    /**
+     * Este método detecta el tipo de usuario en cada línea, lo genera con downcasting y lo agrega a una ArrayList
+     * @param archivo Archivo.extension que se va leer.
+     * @return ArrayList<Usuario> Una ArrayList con todos los usuarios que pertenecen a ese documento.
+     */
      public static ArrayList<Usuario> obtenerListaUsuarios (String archivo){
         ArrayList<String> lineas=ManejoArchivos.LeeFichero(archivo);  
         ArrayList<Usuario>  listaUsuarios= new ArrayList<>();

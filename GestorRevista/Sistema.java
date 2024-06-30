@@ -1,10 +1,12 @@
 package gestorrevista;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Sistema {
-    
+    /**
+     * Inicio del programa, si es autor accede automáticamente, sino se deriva a iniciarSesion()
+     * @param usuarios ArrayList con todos los usuarios de la base
+     */
     public static void inicio(ArrayList<Usuario> usuarios){
         Scanner sc = new Scanner(System.in);
         System.out.println("**************GESTOR DE PUBLICACIONES**************");
@@ -31,9 +33,19 @@ public class Sistema {
         if(rol.equalsIgnoreCase("a")){
             System.out.println("SE DA PASO A LAS OPCIONES DE AUTOR");
         }
+        else{
+            System.out.println("OPCION INVALIDA");
+        }
         
 
     }
+    /**
+     * Método para validar las credenciales de Editores y Revisores
+     * @param usuario Ingresado por el usuario
+     * @param contraseña Ingresado por el usuario
+     * @param usuarios ArrayList con todos los usuarios de la base 
+     * @return Booleano en función de: El usuario existe ^ La contraseña es correcta
+     */
     public static boolean iniciarSesion(String usuario, String contraseña,ArrayList<Usuario> usuarios){
         for (Usuario u: usuarios) {
             while(u.correo.contains(usuario)){
@@ -98,6 +110,7 @@ public class Sistema {
         ArrayList<Usuario> ListaUsuarios=new ArrayList<Usuario>(Usuario.obtenerListaUsuarios("Usuarios.txt")) ;
         //System.out.println(ListaUsuarios);
         inicio(ListaUsuarios);
+        
     }
     
 }
