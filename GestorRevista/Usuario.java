@@ -92,7 +92,6 @@ public class Usuario {
         for(String s:lineas){
             String [] datos=s.split("-");
             if(datos.length==7){
-                /*System.out.println(datos[0]+datos[1]+datos[2]+datos[3]+datos[4]+datos[5]);*/
                 String nombre=datos[datos.length-7];
                 String apellido=datos[datos.length-7];
                 String correo=datos[datos.length-5];
@@ -103,7 +102,6 @@ public class Usuario {
                 listaUsuarios.add(u);
             }
             if (datos.length==6) {
-                System.out.println(datos[0]+datos[1]+datos[2]+datos[3]+datos[4]);
                 String nombre=datos[datos.length-6];
                 String apellido=datos[datos.length-4];
                 String correo=datos[datos.length-4];
@@ -114,7 +112,6 @@ public class Usuario {
                 listaUsuarios.add(u);
             }
             if (datos.length==8) {
-                System.out.println(datos[0]+datos[1]+datos[2]+datos[3]+datos[4]+datos[5]+datos[6]+datos[7]);
                 String nombre=datos[datos.length-8];
                 String apellido=datos[datos.length-7];
                 String correo=datos[datos.length-6];
