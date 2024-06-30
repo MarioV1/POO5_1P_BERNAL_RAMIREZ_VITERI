@@ -12,8 +12,8 @@ public class ManejoArchivos {
     /**
      * Limpia el archivo de usuario con cada ejecución para que no se dupliquen y se pueda trabajar mejor
      **/
-    public static void limpiarArchivo(){
-        try (FileWriter fw = new FileWriter("Usuarios.txt",false)) {
+    public static void limpiarArchivo(String archivo){
+        try (FileWriter fw = new FileWriter(archivo,false)) {
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();

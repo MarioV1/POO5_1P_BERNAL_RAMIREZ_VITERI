@@ -50,10 +50,10 @@ public class Autor extends Usuario {
     //Métodos
     /**
      * Recopila los datos del Autor y su artículo para agregarlos al sistema
-     * @param listaArt Lista de articulos donde se añadirá el nuevo
-     * @param listaUsuarios Lista de usuarios donde se registra el Autor
+     * @param archivoArticulos Archivo donde se almacenan y escriben artículos
+     * @param archivoUsuarios  Archivo donde se almacenan y escriben los usuarios
      */
-    public static void someterArt(ArrayList<Articulo> listaArt,ArrayList<Usuario> listaUsuarios){
+    public static void someterArt(String archivoArticulos,String archivoUsuarios){
         Scanner sc=new Scanner(System.in);
         System.out.println("**************REGISTRO DE DATOS AUTOR**************");
         System.out.println("Ingrese su nombre:");
@@ -79,8 +79,8 @@ public class Autor extends Usuario {
         System.out.println("Desea iniciar el proceso de revision?");
         String respuesta=sc.nextLine();
         if(respuesta.equalsIgnoreCase("si")){
-            listaUsuarios.add(u);
-            listaArt.add(articulo1);
+            Articulo.escribirArticulo(archivoArticulos, articulo1);
+            Usuario.EscribirUsuario(archivoUsuarios, u);
         }
         else{
             System.out.println("EL ARTICULO NO FUE INGRESADO");

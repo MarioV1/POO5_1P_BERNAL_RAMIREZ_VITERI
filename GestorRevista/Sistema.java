@@ -7,8 +7,9 @@ public class Sistema {
      * Inicio del programa, si es autor accede automáticamente, sino se deriva a iniciarSesion()
      * @param usuarios ArrayList con todos los usuarios de la base
      */
-    public static void inicio(ArrayList<Usuario> usuarios, ArrayList<Articulo> articulos){
+    public static void inicio(String archivoUsuarios,String archivoArticulos){
         Scanner sc = new Scanner(System.in);
+        ArrayList<Usuario> usuarios=Usuario.obtenerListaUsuarios(archivoUsuarios);
         System.out.println("**************GESTOR DE PUBLICACIONES**************");
         System.out.println("Ingrese su rol:\nR-Revisor\nE-Editor\nA-Autor");
         String rol=sc.nextLine();
@@ -32,7 +33,7 @@ public class Sistema {
     }
         if(rol.equalsIgnoreCase("a")){
             System.out.println("SE DA PASO A LAS OPCIONES DE AUTOR");
-            Autor.someterArt(articulos, usuarios);
+            Autor.someterArt(archivoArticulos,archivoUsuarios);
         }
         else{
         }
@@ -91,7 +92,8 @@ public class Sistema {
 }
     public static void main(String[] args){
         /*Sección de pruebas Mario Viteri */
-        ManejoArchivos.limpiarArchivo();
+        ManejoArchivos.limpiarArchivo("Usuarios.txt");
+        ManejoArchivos.limpiarArchivo("Articulos.txt");
         //CREACIÓN DE USUARIOS
         Usuario u1=new Editor("Mario","Viteri","mhviteri@espol.edu.ec","ESPOL","mhviteri","1726419417");
         Usuario u2=new Editor("Andres","Perez","aperez@hotmail.com","UG","aperez","12345");
@@ -104,12 +106,11 @@ public class Sistema {
         Usuario.EscribirUsuario("Usuarios.txt",u3);
         Usuario.EscribirUsuario("Usuarios.txt",u4);
         Usuario.EscribirUsuario("Usuarios.txt",u5);
-        //System.out.println(ManejoArchivos.LeeFichero("Usuarios.txt"));
+        //PROGRAMA
+        inicio("Usuarios.txt","Articulos.txt");
         ArrayList<Usuario> ListaUsuarios=new ArrayList<Usuario>(Usuario.obtenerListaUsuarios("Usuarios.txt")) ;
-        ArrayList<Articulo> listaArt=new ArrayList<Articulo>();
-        //System.out.println(ListaUsuarios);
-        inicio(ListaUsuarios, listaArt);
-        System.out.println(listaArt);
+        ArrayList<Articulo> listaArt=new ArrayList<Articulo>(Articulo.obtenerListaArticulos("Articulos.txt"));
+        System.out.println(listaArt.get(0));
         
     }
     
