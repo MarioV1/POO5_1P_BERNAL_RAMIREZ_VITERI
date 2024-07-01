@@ -99,13 +99,22 @@ public class Sistema {
         Usuario u2=new Editor("Andres","Perez","aperez@hotmail.com","UG","aperez","12345");
         Usuario u3=new Editor("Alejandra","Castro", "acastro@hotmail.com", "UEES","acastro","acastro12");
         Usuario u4=new Revisor("Juan","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);
-        Usuario u5=new Autor("Hector","Morales", "hmorales@espol.edu.ec", "ESPOL","Matmaticas");
+        Usuario u6=new Revisor("Jose","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);
+        Usuario u7=new Revisor("Julia","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);
+        Usuario u8=new Revisor("Juan Esteban","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);
+        Usuario u9=new Revisor("Julieta","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);
+        Usuario u10=new Autor("Hector","Morales", "hmorales@espol.edu.ec", "ESPOL","Matmaticas");
         //GUARDADO EN EL ARCHIVO "Usuarios.txt"
         Usuario.EscribirUsuario("Usuarios.txt",u1);
         Usuario.EscribirUsuario("Usuarios.txt",u2);
         Usuario.EscribirUsuario("Usuarios.txt",u3);
         Usuario.EscribirUsuario("Usuarios.txt",u4);
-        Usuario.EscribirUsuario("Usuarios.txt",u5);
+        Usuario.EscribirUsuario("Usuarios.txt",u6);
+        Usuario.EscribirUsuario("Usuarios.txt",u7);
+        Usuario.EscribirUsuario("Usuarios.txt",u8);
+        Usuario.EscribirUsuario("Usuarios.txt",u9);
+        Usuario.EscribirUsuario("Usuarios.txt",u10);
+
         //PROGRAMA
         inicio("Usuarios.txt","Articulos.txt");
         ArrayList<Usuario> ListaUsuarios=new ArrayList<Usuario>(Usuario.obtenerListaUsuarios("Usuarios.txt")) ;

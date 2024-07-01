@@ -3,6 +3,7 @@ package gestorrevista;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Autor extends Usuario {
     //Atributos
@@ -81,8 +82,41 @@ public class Autor extends Usuario {
         if(respuesta.equalsIgnoreCase("si")){
             Articulo.escribirArticulo(archivoArticulos, articulo1);
             Usuario.EscribirUsuario(archivoUsuarios, u);
+            ArrayList<Usuario> listaUsuarios=new ArrayList<>(Usuario.obtenerListaUsuarios(archivoUsuarios));
+            ArrayList<Revisor> listaRevisores=new ArrayList<>();
+            ArrayList<Editor> listaEditores=new ArrayList<>();
+            ArrayList<Revisor> revisoresAsignados=new ArrayList<>();
+            Random random=new Random();
+            for (Usuario usuario : listaUsuarios) {
+                if (usuario.getClass()==Revisor.class) {
+                    Revisor revisor = (Revisor) usuario;
+                    listaRevisores.add(revisor);
+                }
+                if (usuario.getClass()==Editor.class) {
+                    Editor editor= (Editor) usuario;
+                    listaEditores.add(editor);
+                }  
+            }
+            //Asignación Revisores
+            int num1= random.nextInt(listaRevisores.size()+1);
+            int num2= random.nextInt(num1);
+            Revisor r1=listaRevisores.get(num1);
+            Revisor r2=listaRevisores.get(num2);
+            revisoresAsignados.add(r1);
+            revisoresAsignados.add(r2);
+            System.out.println("Revisores asignados:\n");
+            System.out.println(r1.nombre+" "+r1.apellido+" - Correo electrónico de notificación enviado a: "+r1.correo);
+            System.out.println(r2.nombre+" "+r2.apellido+" - Correo electrónico de notificación enviado a: "+r2.correo);
+            //Asignación Editor
+            int num=random.nextInt(listaEditores.size());
+            Editor e=listaEditores.get(num);
+            System.out.println("Editor asignado ");
+            System.out.println(e.nombre+" "+e.apellido+" - Correo electrónico de notificación enviado a: "+e.correo);
+            GestionarArticulo gestor=new GestionarArticulo(articulo1, revisoresAsignados, e, respuesta);
+            System.out.println(gestor.toString());
         }
         else{
+            
             System.out.println("EL ARTICULO NO FUE INGRESADO");
         }
         sc.close();

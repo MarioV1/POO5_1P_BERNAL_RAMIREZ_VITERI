@@ -3,6 +3,7 @@ package gestorrevista;
 import java.util.Random;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -99,7 +100,7 @@ public class Articulo {
             EstadoAriculo estadoAriculo=EstadoAriculo.valueOf(datos[11]);
             Autor autor=new Autor(nombreAutor,apellidoAutor,correoAutor,codigoAutor,institucionAutor,campoAutor);
             Articulo articulo=new Articulo(codigo, autor, resumen, contenido, palabrasClave, comentarios, estadoAriculo);
-            listaArticulos.add(articulo);
+            listaArticulos.add(articulo);    
         }
         return listaArticulos;
     }          

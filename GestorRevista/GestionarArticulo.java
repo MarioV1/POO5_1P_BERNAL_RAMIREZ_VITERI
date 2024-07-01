@@ -7,16 +7,19 @@ public class GestionarArticulo {
     public Articulo articulo;
     public ArrayList<Revisor> revisor;
     public Editor editor;
-    public int id;
+    public static int id;
     public String fecha; 
 
     //constructor
+    public GestionarArticulo(){
+        
+    }
 
-    public GestionarArticulo(Articulo articulo, ArrayList<Revisor> revisor, Editor editor, int id, String fecha){
+    public GestionarArticulo(Articulo articulo, ArrayList<Revisor> revisor, Editor editor, String fecha){
         this.articulo = articulo;
         this.revisor = revisor;
         this.editor = editor;
-        this.id = id;
+        id++;
         this.fecha = fecha;
     }
 
