@@ -5,9 +5,11 @@ import java.util.Scanner;
 public class Sistema {
     /**
      * Inicio del programa, si es autor accede automáticamente, sino se deriva a iniciarSesion()
-     * @param usuarios ArrayList con todos los usuarios de la base
+     * @param archivoUsuarios Archivo de donde se leerán y extraerán los usuarios
+     * @param archivoArticulos Archivo de donde se leerán y extraerán los usuarios
+     * @param listaGestion Lista donde se guardará el proceso en caso de revisión en caso de someter artículo
      */
-    public static void inicio(String archivoUsuarios,String archivoArticulos){
+    public static void inicio(String archivoUsuarios,String archivoArticulos, ArrayList<GestionarArticulo> listaGestion ){
         Scanner sc = new Scanner(System.in);
         ArrayList<Usuario> usuarios=Usuario.obtenerListaUsuarios(archivoUsuarios);
         System.out.println("**************GESTOR DE PUBLICACIONES**************");
@@ -33,7 +35,7 @@ public class Sistema {
     }
         if(rol.equalsIgnoreCase("a")){
             System.out.println("SE DA PASO A LAS OPCIONES DE AUTOR");
-            Autor.someterArt(archivoArticulos,archivoUsuarios);
+            Autor.someterArt(archivoArticulos,archivoUsuarios,listaGestion);
         }
         else{
         }
@@ -93,17 +95,16 @@ public class Sistema {
     public static void main(String[] args){
         /*Sección de pruebas Mario Viteri */
         ManejoArchivos.limpiarArchivo("Usuarios.txt");
-        ManejoArchivos.limpiarArchivo("Articulos.txt");
         //CREACIÓN DE USUARIOS
-        Usuario u1=new Editor("Mario","Viteri","mhviteri@espol.edu.ec","ESPOL","mhviteri","1726419417");
-        Usuario u2=new Editor("Andres","Perez","aperez@hotmail.com","UG","aperez","12345");
-        Usuario u3=new Editor("Alejandra","Castro", "acastro@hotmail.com", "UEES","acastro","acastro12");
-        Usuario u4=new Revisor("Juan","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);
-        Usuario u6=new Revisor("Jose","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);
-        Usuario u7=new Revisor("Julia","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);
-        Usuario u8=new Revisor("Juan Esteban","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);
-        Usuario u9=new Revisor("Julieta","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);
-        Usuario u10=new Autor("Hector","Morales", "hmorales@espol.edu.ec", "ESPOL","Matmaticas");
+        Usuario u1=new Editor("Mario","Viteri","mhviteri@espol.edu.ec","ESPOL","mhviteri","1726419417");//DOWNCASTING
+        Usuario u2=new Editor("Andres","Perez","aperez@hotmail.com","UG","aperez","12345");//DOWNCASTING
+        Usuario u3=new Editor("Alejandra","Castro", "acastro@hotmail.com", "UEES","acastro","acastro12");//DOWNCASTING
+        Usuario u4=new Revisor("Juan","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);//DOWNCASTING
+        Usuario u6=new Revisor("Jose","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);//DOWNCASTING
+        Usuario u7=new Revisor("Julia","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);//DOWNCASTING
+        Usuario u8=new Revisor("Juan Esteban","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);//DOWNCASTING
+        Usuario u9=new Revisor("Julieta","Holguin", "jholguin@hotmail.com", "Matematicas","jholguin","JH954",4);//DOWNCASTING
+        Usuario u10=new Autor("Hector","Morales", "hmorales@espol.edu.ec", "ESPOL","Matmaticas");//DOWNCASTING
         //GUARDADO EN EL ARCHIVO "Usuarios.txt"
         Usuario.EscribirUsuario("Usuarios.txt",u1);
         Usuario.EscribirUsuario("Usuarios.txt",u2);
@@ -114,13 +115,13 @@ public class Sistema {
         Usuario.EscribirUsuario("Usuarios.txt",u8);
         Usuario.EscribirUsuario("Usuarios.txt",u9);
         Usuario.EscribirUsuario("Usuarios.txt",u10);
-
         //PROGRAMA
-        inicio("Usuarios.txt","Articulos.txt");
         ArrayList<Usuario> ListaUsuarios=new ArrayList<Usuario>(Usuario.obtenerListaUsuarios("Usuarios.txt")) ;
         ArrayList<Articulo> listaArt=new ArrayList<Articulo>(Articulo.obtenerListaArticulos("Articulos.txt"));
+        ArrayList<GestionarArticulo> listaGestion=new ArrayList<GestionarArticulo>();
+        inicio("Usuarios.txt","Articulos.txt",listaGestion);
         System.out.println(listaArt.get(0));
-        
+        System.out.println(listaGestion.get(0).articulo.contenido+listaGestion.get(0).revisor.get(0).nombre+listaGestion.get(0).revisor.get(1).nombre+listaGestion.get(0).fecha+GestionarArticulo.id+listaGestion.get(0).id);
     }
     
 }

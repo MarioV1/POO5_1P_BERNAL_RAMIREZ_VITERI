@@ -2,8 +2,11 @@ package gestorrevista;
 
 import java.util.Random;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Autor extends Usuario {
     //Atributos
@@ -12,12 +15,14 @@ public class Autor extends Usuario {
     private String campo;
     
     //Constructores
+    //Con este constructor se genera  un código alfanumérico aleatorio de 10 caracteres
     public Autor(String nombre, String apellido, String correo, String institucion,String campo){
         super(nombre,apellido,correo);
         this.codigoID=new Random().ints(48, 122).filter(i -> (i < 58 || i > 64) && (i < 91 || i > 96)).limit(10).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString().replace("-", "a");
         this.institucion=institucion;
         this.campo=campo;
     }
+    //Este constructor se utiliza en la extracción de Autores de la lista de usuarios para mantener el código generado con la creación del Autor
     public Autor(String nombre, String apellido, String correo,String codigoID, String institucion,String campo){
         super(nombre,apellido,correo);
         this.codigoID=codigoID;
@@ -53,8 +58,9 @@ public class Autor extends Usuario {
      * Recopila los datos del Autor y su artículo para agregarlos al sistema
      * @param archivoArticulos Archivo donde se almacenan y escriben artículos
      * @param archivoUsuarios  Archivo donde se almacenan y escriben los usuarios
+     * @param listaGestion Lista donde se agrega el proceso de revisión 
      */
-    public static void someterArt(String archivoArticulos,String archivoUsuarios){
+    public static void someterArt(String archivoArticulos,String archivoUsuarios, ArrayList<GestionarArticulo> listaGestion){
         Scanner sc=new Scanner(System.in);
         System.out.println("**************REGISTRO DE DATOS AUTOR**************");
         System.out.println("Ingrese su nombre:");
@@ -76,12 +82,13 @@ public class Autor extends Usuario {
         System.out.println("Ingrese las palabras clave:");
         String palabrasClave=sc.nextLine();
         Autor autor1=(Autor) u;
-        Articulo articulo1=new Articulo(autor1, resumen, contenido, palabrasClave, "", EstadoAriculo.REVISION);
+        Articulo articulo1=new Articulo(autor1, resumen, contenido, palabrasClave, " ", EstadoAriculo.REVISION);
         System.out.println("Desea iniciar el proceso de revision?");
         String respuesta=sc.nextLine();
         if(respuesta.equalsIgnoreCase("si")){
             Articulo.escribirArticulo(archivoArticulos, articulo1);
             Usuario.EscribirUsuario(archivoUsuarios, u);
+            //Se importa la lista de usuarios para dividir en lista de revisores y editores para la asignación
             ArrayList<Usuario> listaUsuarios=new ArrayList<>(Usuario.obtenerListaUsuarios(archivoUsuarios));
             ArrayList<Revisor> listaRevisores=new ArrayList<>();
             ArrayList<Editor> listaEditores=new ArrayList<>();
@@ -89,16 +96,16 @@ public class Autor extends Usuario {
             Random random=new Random();
             for (Usuario usuario : listaUsuarios) {
                 if (usuario.getClass()==Revisor.class) {
-                    Revisor revisor = (Revisor) usuario;
+                    Revisor revisor = (Revisor) usuario;//UPCASTING
                     listaRevisores.add(revisor);
                 }
                 if (usuario.getClass()==Editor.class) {
-                    Editor editor= (Editor) usuario;
+                    Editor editor= (Editor) usuario;//UPCASTING
                     listaEditores.add(editor);
                 }  
             }
             //Asignación Revisores
-            int num1= random.nextInt(listaRevisores.size()+1);
+            int num1= random.nextInt(listaRevisores.size()-1)+1;
             int num2= random.nextInt(num1);
             Revisor r1=listaRevisores.get(num1);
             Revisor r2=listaRevisores.get(num2);
@@ -112,11 +119,12 @@ public class Autor extends Usuario {
             Editor e=listaEditores.get(num);
             System.out.println("Editor asignado ");
             System.out.println(e.nombre+" "+e.apellido+" - Correo electrónico de notificación enviado a: "+e.correo);
-            GestionarArticulo gestor=new GestionarArticulo(articulo1, revisoresAsignados, e, respuesta);
-            System.out.println(gestor.toString());
+            //Inicio del proceso
+            String fecha=new SimpleDateFormat("dd/MM/yyyy").format(new Date());//Se genera fecha de inicio del proceso en forma de string
+            GestionarArticulo gestor=new GestionarArticulo(articulo1, revisoresAsignados, e, fecha);
+            listaGestion.add(gestor);
         }
         else{
-            
             System.out.println("EL ARTICULO NO FUE INGRESADO");
         }
         sc.close();

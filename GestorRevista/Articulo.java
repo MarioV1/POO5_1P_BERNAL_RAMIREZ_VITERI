@@ -17,6 +17,7 @@ public class Articulo {
     public String comentarios;
     public EstadoAriculo estadoAriculo;
     //Constructores
+    //Con este constructor se genera  un código alfanumérico aleatorio de 10 caracteres
     public Articulo(Autor datosAutor,String resumen,String contenido,String palabrasClave,String comentarios,EstadoAriculo estadoAriculo){
         this.codigo=new Random().ints(48, 122).filter(i -> (i < 58 || i > 64) && (i < 91 || i > 96)).limit(10).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString().replace("-", "a");;
         this.datosAutor=datosAutor;
@@ -25,6 +26,7 @@ public class Articulo {
         this.comentarios=comentarios;
         this.estadoAriculo=estadoAriculo;
     }
+    //Este constructor se utiliza en la extracción de Autores de la lista de usuarios para mantener el código generado con la creación del Artículo
     public Articulo(String codigo,Autor datosAutor,String resumen,String contenido,String palabrasClave,String comentarios,EstadoAriculo estadoAriculo){
         this.codigo=codigo;
         this.datosAutor=datosAutor;
@@ -39,12 +41,12 @@ public class Articulo {
      * @param nombreArchivo Archivo en donde se escribirá el artículo
      * @param articulo Artículo a escribirse
      */
-
     public static void escribirArticulo(String nombreArchivo, Articulo articulo){
         FileWriter fichero = null;
         BufferedWriter bw = null;
       
         try {
+            //Se escriben los atributos del Artículo separados por '-'
             fichero = new FileWriter(nombreArchivo,true);
             bw = new BufferedWriter(fichero);
             bw.write(articulo.codigo+"-");
@@ -80,7 +82,6 @@ public class Articulo {
      * @param archivo Archivo a leer
      * @return Un ArrayList con todos los artículos guardados
      */
-
     public static ArrayList<Articulo> obtenerListaArticulos (String archivo){
         ArrayList<String> lineas=ManejoArchivos.LeeFichero(archivo);  
         ArrayList<Articulo>  listaArticulos= new ArrayList<>();

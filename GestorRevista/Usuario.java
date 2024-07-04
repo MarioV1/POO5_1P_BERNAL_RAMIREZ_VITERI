@@ -25,7 +25,6 @@ public class Usuario {
      * @param nombreArchivo Nombre.extension del archivo que se desea leer
      * @param usuario Usuario que se va escribir en el archivo (Debe ser obligatoriamente generado con downcasting)
      */
-
     public static void EscribirUsuario(String nombreArchivo, Usuario usuario) {
 
         FileWriter fichero = null;
@@ -35,7 +34,7 @@ public class Usuario {
             fichero = new FileWriter(nombreArchivo,true);
             bw = new BufferedWriter(fichero);
             if(usuario.getClass()==Autor.class){
-                Autor a= (Autor) usuario;
+                Autor a= (Autor) usuario;//UPCASTING
                 bw.write(a.nombre+"-");
                 bw.write(a.apellido+"-");
                 bw.write(a.correo+"-");
@@ -45,7 +44,7 @@ public class Usuario {
                 bw.write("Autor"+"\n");
             }
             if(usuario.getClass()==Editor.class){
-                Editor e=(Editor) usuario;
+                Editor e=(Editor) usuario;//UPCASTING
                 bw.write(e.nombre+"-");
                 bw.write(e.apellido+"-");
                 bw.write(e.correo+"-");
@@ -55,7 +54,7 @@ public class Usuario {
                 
             }
             if(usuario.getClass()==Revisor.class){
-                Revisor r=(Revisor) usuario;
+                Revisor r=(Revisor) usuario;//UPCASTING
                 bw.write(r.nombre+"-");
                 bw.write(r.apellido+"-");
                 bw.write(r.correo+"-");
@@ -98,7 +97,7 @@ public class Usuario {
                 String codigoID=datos[datos.length-4];
                 String institucion=datos[datos.length-3];
                 String campo=datos[datos.length-2];
-                Usuario u=new Autor(nombre,apellido,correo,codigoID,institucion,campo);
+                Usuario u=new Autor(nombre,apellido,correo,codigoID,institucion,campo);//DOWNCASTING
                 listaUsuarios.add(u);
             }
             if (datos.length==6) {
@@ -108,7 +107,7 @@ public class Usuario {
                 String journal=datos[datos.length-3];
                 String usuario=datos[datos.length-2];
                 String contraseña=datos[datos.length-1];
-                Usuario u=new Editor(nombre, apellido, correo, journal, usuario, contraseña);
+                Usuario u=new Editor(nombre, apellido, correo, journal, usuario, contraseña);//DOWNCASTING
                 listaUsuarios.add(u);
             }
             if (datos.length==8) {
@@ -119,7 +118,7 @@ public class Usuario {
                 String usuario=datos[datos.length-4];
                 String contraseña=datos[datos.length-3];
                 int numArticulos=Integer.valueOf(datos[datos.length-2]);
-                Usuario u=new Revisor(nombre, apellido, correo,especialidad, usuario, contraseña, numArticulos);
+                Usuario u=new Revisor(nombre, apellido, correo,especialidad, usuario, contraseña, numArticulos);//DOWNCASTING
                 listaUsuarios.add(u);
             }    
         }

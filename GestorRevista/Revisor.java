@@ -15,18 +15,13 @@ public class Revisor extends Usuario{
         this.contraseña = contraseña;
         this.numArticulos = numArticulos;
     }
-
-
     public Revisor(String especialidad, String usuario, String contraseña, int numArticulos){
         this.especialidad = especialidad;
         this.usuario = usuario;
         this.contraseña = contraseña;
         this.numArticulos = numArticulos;
     }
-
-
     //getters y setters
-    
     public String getEspecialidad(){
         return especialidad;
     }
@@ -58,6 +53,4 @@ public class Revisor extends Usuario{
     public void setNumArticulos(int numArticulos){
         this.numArticulos = numArticulos;
     }
-
-
 }

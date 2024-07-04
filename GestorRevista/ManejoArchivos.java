@@ -23,25 +23,21 @@ public class ManejoArchivos {
      * @param nombrearchivo Nombre.extension del archivo que se desea leer
      * @return ArrayList<String> Devuelve un arreglo del contenido del documento separado por cada salto de línea
      **/
-
     public static ArrayList<String> LeeFichero(String nombrearchivo) {
         ArrayList<String> lineas = new ArrayList<>();
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;
-
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
             archivo = new File(nombrearchivo);
             fr = new FileReader(archivo,StandardCharsets.UTF_8);
             br = new BufferedReader(fr);
-
             // Lectura del fichero
             String linea;
             while ((linea = br.readLine()) != null) {
                 lineas.add(linea);
-
             }
 
         } catch (Exception e) {
