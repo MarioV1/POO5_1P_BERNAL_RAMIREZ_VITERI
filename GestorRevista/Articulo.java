@@ -104,5 +104,77 @@ public class Articulo {
             listaArticulos.add(articulo);    
         }
         return listaArticulos;
-    }          
+    }    
+    
+    /**
+     * Getters y setters respectivos de cada atributo
+     *
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Autor getDatosAutor() {
+        return datosAutor;
+    }
+
+    public void setDatosAutor(Autor datosAutor) {
+        this.datosAutor = datosAutor;
+    }
+
+    public String getResumen() {
+        return resumen;
+    }
+
+    public void setResumen(String resumen) {
+        this.resumen = resumen;
+    }
+
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
+
+    public String getPalabrasClave() {
+        return palabrasClave;
+    }
+
+    public void setPalabrasClave(String palabrasClave) {
+        this.palabrasClave = palabrasClave;
+    }
+    public String getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public EstadoAriculo getEstadoArticulo() {
+        return estadoAriculo;
+    }
+
+    public void setEstadoAriculo(EstadoAriculo estadoAriculo) {
+        this.estadoAriculo = estadoAriculo;
+    }
+
+    @Override
+    public String toString() {
+        return "Articulo{" +
+                "codigo='" + codigo + '\'' +
+                ", datosAutor=" + datosAutor +
+                ", resumen='" + resumen + '\'' +
+                ", contenido='" + contenido + '\'' +
+                ", palabrasClave='" + palabrasClave + '\'' +
+                ", comentarios='" + comentarios + '\'' +
+                ", estadoAriculo=" + estadoAriculo +
+                '}';
+    }      
 }
