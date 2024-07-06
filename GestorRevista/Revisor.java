@@ -71,9 +71,12 @@ public class Revisor extends Usuario{
      * @param articulo el artículo a aceptar
      */
     public void aceptarArticulo(Articulo articulo) {
-        incrementarArticulosRevisados();
-        articulo.setEstadoAriculo(EstadoAriculo.ACEPTADO);
-        System.out.println("Artículo aceptado por " + this.getNombre() + " " + this.getApellido());
+        if (articulo.getEstadoArticulo() == EstadoAriculo.REVISION) {
+            articulo.addRevisorAprobado(this);
+            if (articulo.getRevisoresAprobados().size() >= 2) {
+                articulo.setEstadoAriculo(EstadoAriculo.ACEPTADO);
+            }
+        }
     }
 
     /**
@@ -82,19 +85,8 @@ public class Revisor extends Usuario{
      * @param articulo el artículo a rechazar
      */
     public void rechazarArticulo(Articulo articulo) {
-        articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
-        System.out.println("Artículo rechazado por " + this.getNombre() + " " + this.getApellido());
-    }
-
-    /**
-     * Guarda los datos del revisor en un archivo llamado revisores.txt.
-     */
-    public void guardarRevisorEnArchivo() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("revisores.txt", true))) {
-            writer.write(this.getNombre() + "," + this.getApellido() + "," + this.getCorreo() + "," + this.especialidad + "," + this.usuario + "," + this.contraseña + "," + this.numArticulos);
-            writer.newLine();
-        } catch (IOException e) {
-            System.out.println("Error al guardar el revisor en el archivo: " + e.getMessage());
+        if (articulo.getEstadoArticulo() == EstadoAriculo.REVISION) {
+            articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
         }
     }
 

@@ -82,7 +82,7 @@ public class Autor extends Usuario {
         System.out.println("Ingrese las palabras clave:");
         String palabrasClave=sc.nextLine();
         Autor autor1=(Autor) u;
-        Articulo articulo1=new Articulo(autor1, resumen, contenido, palabrasClave, " ", EstadoAriculo.REVISION);
+        Articulo articulo1=new Articulo(autor1, resumen, contenido, palabrasClave, " ", EstadoAriculo.REVISION, new ArrayList<>());
         System.out.println("Desea iniciar el proceso de revision?");
         String respuesta=sc.nextLine();
         if(respuesta.equalsIgnoreCase("si")){

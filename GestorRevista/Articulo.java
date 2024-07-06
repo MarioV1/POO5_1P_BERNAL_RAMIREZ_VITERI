@@ -16,24 +16,31 @@ public class Articulo {
     public String palabrasClave;
     public String comentarios;
     public EstadoAriculo estadoAriculo;
+    private ArrayList<Revisor> revisoresAprobados;
+
     //Constructores
     //Con este constructor se genera  un código alfanumérico aleatorio de 10 caracteres
-    public Articulo(Autor datosAutor,String resumen,String contenido,String palabrasClave,String comentarios,EstadoAriculo estadoAriculo){
+    public Articulo(Autor datosAutor,String resumen,String contenido,String palabrasClave,String comentarios,EstadoAriculo estadoAriculo, ArrayList<Revisor> revisoresAprobados){
         this.codigo=new Random().ints(48, 122).filter(i -> (i < 58 || i > 64) && (i < 91 || i > 96)).limit(10).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString().replace("-", "a");;
         this.datosAutor=datosAutor;
         this.resumen=resumen;
         this.contenido=contenido;
         this.comentarios=comentarios;
         this.estadoAriculo=estadoAriculo;
+        this.revisoresAprobados=revisoresAprobados;
+
     }
     //Este constructor se utiliza en la extracción de Autores de la lista de usuarios para mantener el código generado con la creación del Artículo
-    public Articulo(String codigo,Autor datosAutor,String resumen,String contenido,String palabrasClave,String comentarios,EstadoAriculo estadoAriculo){
+    public Articulo(String codigo,Autor datosAutor,String resumen,String contenido,String palabrasClave,String comentarios,EstadoAriculo estadoAriculo,ArrayList<Revisor> revisoresAprobados){
         this.codigo=codigo;
         this.datosAutor=datosAutor;
         this.resumen=resumen;
         this.contenido=contenido;
         this.comentarios=comentarios;
         this.estadoAriculo=estadoAriculo;
+        this.revisoresAprobados=revisoresAprobados;
+        
+
     }
     //Métodos
     /**
@@ -100,7 +107,7 @@ public class Articulo {
             String comentarios=datos[10];
             EstadoAriculo estadoAriculo=EstadoAriculo.valueOf(datos[11]);
             Autor autor=new Autor(nombreAutor,apellidoAutor,correoAutor,codigoAutor,institucionAutor,campoAutor);
-            Articulo articulo=new Articulo(codigo, autor, resumen, contenido, palabrasClave, comentarios, estadoAriculo);
+            Articulo articulo=new Articulo(codigo, autor, resumen, contenido, palabrasClave, comentarios, estadoAriculo, new ArrayList<>());
             listaArticulos.add(articulo);    
         }
         return listaArticulos;
@@ -164,6 +171,14 @@ public class Articulo {
     public void setEstadoAriculo(EstadoAriculo estadoAriculo) {
         this.estadoAriculo = estadoAriculo;
     }
+    public ArrayList<Revisor> getRevisoresAprobados() {
+        return revisoresAprobados;
+    }
+
+    public void addRevisorAprobado(Revisor revisor) {
+        this.revisoresAprobados.add(revisor);
+    }
+
 
     @Override
     public String toString() {
