@@ -121,7 +121,7 @@ public class Sistema {
         ArrayList<GestionarArticulo> listaGestion=new ArrayList<GestionarArticulo>();
         inicio("Usuarios.txt","Articulos.txt",listaGestion);
         System.out.println(listaArt.get(0));
-        System.out.println(listaGestion.get(0).articulo.contenido+listaGestion.get(0).revisor.get(0).nombre+listaGestion.get(0).revisor.get(1).nombre+listaGestion.get(0).fecha+GestionarArticulo.id+listaGestion.get(0).id);
+        System.out.println(listaGestion.get(0).articulo.contenido+listaGestion.get(0).revisores.get(0).nombre+listaGestion.get(0).revisores.get(1).nombre+listaGestion.get(0).fecha+GestionarArticulo.id+listaGestion.get(0).id);
     }
     
 }
