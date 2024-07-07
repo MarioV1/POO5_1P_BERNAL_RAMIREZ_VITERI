@@ -26,6 +26,9 @@ public class Revisor extends Usuario{
         this.numArticulos = numArticulos;
     }
 
+    
+
+
     //getters y setters
     public String getEspecialidad(){
         return especialidad;

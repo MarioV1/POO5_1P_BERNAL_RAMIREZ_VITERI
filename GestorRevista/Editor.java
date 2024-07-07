@@ -1,14 +1,5 @@
 package gestorrevista;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Calendar;
-import java.util.Date;
-
 public class Editor extends Usuario {
     private String journal;
     private String usuario;
@@ -51,72 +42,69 @@ public class Editor extends Usuario {
     public void setContraseña(String contraseña){
         this.contraseña = contraseña;
     }
-    //Métodos
-    /*@Override
-    public boolean equals(Editor e){
-        if(e!=null && getClass()==e.getClass()){
-            
-        }
-    }*/
-
-    /**
-     * Método para asignar un artículo a revisores.
-     *
-     * @param articulo El artículo a asignar
-     * @param revisores Lista de revisores a asignar
-     * @param listaGestion Lista donde se guardará el proceso de gestión del artículo
+    //Métodos    
+/**
+     * Método para revisar los comentarios de los revisores y tomar una decisión sobre la publicación del artículo.
+     * @param articulo El artículo que se está revisando
+     * @param comentarios Comentarios adicionales a los revisores
      */
+    public void revisarComentarios(Articulo articulo, String comentarios) {
+        EstadoAriculo estado = articulo.getEstadoArticulo();
 
+        switch (estado) {
+            case ACEPTADO:
+                System.out.println("Artículo aceptado para publicación.");
+                notificarInvestigador(articulo, comentarios + "\nArtículo aceptado para publicación.");
+                guardarRevision(articulo, comentarios + "\nArtículo aceptado para publicación.");
+                break;
 
-    
+            case RECHAZADO:
+                System.out.println("Artículo rechazado para publicación.");
+                notificarInvestigador(articulo, comentarios + "\nArtículo rechazado para publicación.");
+                guardarRevision(articulo, comentarios + "\nArtículo rechazado para publicación.");
+                break;
 
+            case REVISION:
+                System.out.println("Decisión pendiente. Más revisión requerida.");
+                break;
 
-    public void asignarArticulo(Articulo articulo, ArrayList<Revisor> revisores, ArrayList<GestionarArticulo> listaGestion) {
-        GestionarArticulo gestionArticulo = new GestionarArticulo(articulo, revisores, this, "Fecha de asignación");
-        listaGestion.add(gestionArticulo);
-        System.out.println("Artículo asignado correctamente a revisores.");
-    }
-
-    /**
-     * Método para enviar un artículo a publicación una vez revisado y aceptado.
-     *
-     * @param articulo El artículo a enviar a publicación
-     */
-    public void enviarArticuloAPublicacion(Articulo articulo) {
-        if (articulo.getEstadoArticulo() == EstadoAriculo.ACEPTADO) {
-            // Lógica para enviar el artículo a la sección de publicación
-            System.out.println("Artículo enviado a publicación con éxito.");
-        } else {
-            System.out.println("El artículo no puede ser enviado a publicación porque no ha sido aceptado.");
+            default:
+                System.out.println("Estado desconocido.");
+                break;
         }
     }
 
     /**
-     * Método para rechazar un artículo que no cumple con los criterios de la revista.
-     *
-     * @param articulo El artículo a rechazar
+     * Método para notificar al investigador del resultado final por correo electrónico.
+     * @param articulo El artículo revisado
+     * @param comentarios Los comentarios de los revisores
      */
-    public void rechazarArticulo(Articulo articulo) {
-        if (articulo.getEstadoArticulo() == EstadoAriculo.REVISION) {
-            articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
-            System.out.println("Artículo rechazado.");
-        } else {
-            System.out.println("El artículo no puede ser rechazado en este momento.");
-        }
+    public void notificarInvestigador(Articulo articulo, String comentarios) {
+        String mensaje = "Estimado autor,\n\n";
+        mensaje += "Queremos informarle que el artículo con código " + articulo.getCodigo() + " ha sido revisado.\n";
+        mensaje += "Comentarios de los revisores:\n";
+        mensaje += comentarios + "\n";
+        mensaje += "Atentamente,\n";
+        mensaje += "Equipo editorial de " + this.journal;
+
+        // Lógica para enviar correo electrónico al autor
+        System.out.println(articulo.getDatosAutor().getCorreo() + "Resultado de revisión de artículo" + mensaje);
     }
 
     /**
-     * Método para notificar a los autores sobre el estado de sus artículos.
-     *
-     * @param listaGestion Lista de artículos gestionados
+     * Método para guardar los detalles de la revisión en un archivo `revisiones.txt`.
+     * @param articulo El artículo revisado
+     * @param comentarios Los comentarios de los revisores
      */
-    public void notificarAutores(ArrayList<GestionarArticulo> listaGestion) {
-        for (GestionarArticulo gestion : listaGestion) {
-            System.out.println("Notificando al autor: " + gestion.getArticulo().getDatosAutor().getCorreo());
-            // Lógica para enviar notificación por correo u otro medio
-        }
-        System.out.println("Notificaciones enviadas a todos los autores.");
+    public void guardarRevision(Articulo articulo, String comentarios) {
+        String detallesRevision = "Código del artículo: " + articulo.getCodigo() + "\n";
+        detallesRevision += "Comentarios de los revisores:\n";
+        detallesRevision += comentarios + "\n";
+
+        // Lógica para guardar los detalles de la revisión en el archivo `revisiones.txt`
+        ManejoArchivos.escribirArchivo("revisiones.txt", detallesRevision);
     }
+   
 
     // Método toString para representar el objeto como cadena
     @Override

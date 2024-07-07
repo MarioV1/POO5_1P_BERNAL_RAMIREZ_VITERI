@@ -58,4 +58,15 @@ public class ManejoArchivos {
     }
 
 
+        /**
+     * @param nombrearchivo Nombre.extension del archivo donde se desea escribir
+     * @param contenido     El contenido que se desea escribir en el archivo
+     **/
+    public static void escribirArchivo(String nombrearchivo, String contenido) {
+        try (FileWriter fw = new FileWriter(nombrearchivo, true)) {
+            fw.write(contenido + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
