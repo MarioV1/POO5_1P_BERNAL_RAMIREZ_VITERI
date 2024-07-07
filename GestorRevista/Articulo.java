@@ -176,8 +176,11 @@ public class Articulo {
     }
 
     public void addRevisorAprobado(Revisor revisor) {
-        this.revisoresAprobados.add(revisor);
+        if (!revisoresAprobados.contains(revisor)) {
+            revisoresAprobados.add(revisor);
+        }
     }
+
 
 
     @Override
