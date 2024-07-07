@@ -3,44 +3,57 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Sistema {
-    /**
-     * Inicio del programa, si es autor accede automáticamente, sino se deriva a iniciarSesion()
+
+        /**
+     * Inicio del programa, si se quiere gestionar un articulo accede automáticamente, sino se deriva a iniciarSesion()
      * @param archivoUsuarios Archivo de donde se leerán y extraerán los usuarios
      * @param archivoArticulos Archivo de donde se leerán y extraerán los usuarios
      * @param listaGestion Lista donde se guardará el proceso en caso de revisión en caso de someter artículo
      */
-    public static void inicio(String archivoUsuarios,String archivoArticulos, ArrayList<GestionarArticulo> listaGestion ){
+    public static void inicio(String archivoUsuarios,String archivoArticulos, ArrayList<GestionarArticulo> listaGestion){
+        
         Scanner sc = new Scanner(System.in);
         ArrayList<Usuario> usuarios=Usuario.obtenerListaUsuarios(archivoUsuarios);
-        System.out.println("**************GESTOR DE PUBLICACIONES**************");
-        System.out.println("Ingrese su rol:\nR-Revisor\nE-Editor\nA-Autor");
-        String rol=sc.nextLine();
-        if(rol.equalsIgnoreCase("e")){
-            System.out.println("Ingrese usuario:");
-            String usuario = sc.next();
-            System.out.println("Ingrese su contraseña:");
-            String contraseña = sc.next();
-            if(iniciarSesion(usuario, contraseña, usuarios,"Editor")==true){
-                System.out.println("SE DA PASO A LAS OPCIONES DE EDITOR");
-            }
-        }
-        if(rol.equalsIgnoreCase("r")){
-            System.out.println("Ingrese usuario:");
-            String usuario = sc.next();
-            System.out.println("Ingrese su contraseña:");
-            String contraseña = sc.next();
-            if(iniciarSesion(usuario, contraseña, usuarios,"Revisor")==true){
-                System.out.println("SE DA PASO A LAS OPCIONES DE REVISOR");
-        }    
-    }
-        if(rol.equalsIgnoreCase("a")){
+        System.out.println("**************ARTÍCULOS CIENTÍFICOS**************");
+        System.out.println("Escoja entre las opciones:\nS-Someter Articulo\nI-Iniciar Sesión");
+        String opcion = sc.nextLine();
+        System.out.println("-------------------------------------------------");
+
+        if(opcion.equalsIgnoreCase("s")){
+            System.out.println("**************GESTOR DE PUBLICACIONES**************");
             System.out.println("SE DA PASO A LAS OPCIONES DE AUTOR");
             Autor.someterArt(archivoArticulos,archivoUsuarios,listaGestion);
+            System.out.println("-------------------------------------------------");
+
+        }if(opcion.equalsIgnoreCase("i")){
+            System.out.println("**************Iniciar Sesión**************");
+            System.out.println("Ingrese su rol:\nR-Revisor\nE-Editor");
+            String rol=sc.nextLine();
+
+            if(rol.equalsIgnoreCase("e")){
+                System.out.println("Ingrese usuario:");
+                String usuario = sc.next();
+                System.out.println("Ingrese su contraseña:");
+                String contraseña = sc.next();
+                if(iniciarSesion(usuario, contraseña, usuarios,"Editor")==true){
+                    System.out.println("SE DA PASO A LAS OPCIONES DE EDITOR");
+                }
+            }
+            if(rol.equalsIgnoreCase("r")){
+                System.out.println("Ingrese usuario:");
+                String usuario = sc.next();
+                System.out.println("Ingrese su contraseña:");
+                String contraseña = sc.next();
+                if(iniciarSesion(usuario, contraseña, usuarios,"Revisor")==true){
+                    System.out.println("SE DA PASO A LAS OPCIONES DE REVISOR");
+                }else{
+
+                }
+            }
         }
-        else{
-        }
-        sc.close();
+        sc.close(); 
     }
+
     /**
      * Método para validar las credenciales de Editores y Revisores
      * @param usuario Ingresado por el usuario
@@ -119,7 +132,11 @@ public class Sistema {
         ArrayList<Usuario> ListaUsuarios=new ArrayList<Usuario>(Usuario.obtenerListaUsuarios("Usuarios.txt")) ;
         ArrayList<Articulo> listaArt=new ArrayList<Articulo>(Articulo.obtenerListaArticulos("Articulos.txt"));
         ArrayList<GestionarArticulo> listaGestion=new ArrayList<GestionarArticulo>();
+
+        
+
         inicio("Usuarios.txt","Articulos.txt",listaGestion);
+
         System.out.println(listaArt.get(0));
         System.out.println(listaGestion.get(0).articulo.contenido+listaGestion.get(0).revisores.get(0).nombre+listaGestion.get(0).revisores.get(1).nombre+listaGestion.get(0).fecha+GestionarArticulo.id+listaGestion.get(0).id);
     }

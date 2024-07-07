@@ -48,7 +48,7 @@ public class Editor extends Usuario {
      * @param articulo El artículo que se está revisando
      * @param comentarios Comentarios adicionales a los revisores
      */
-    public void revisarComentarios(Articulo articulo, String comentarios) {
+    public static void revisarComentarios(Articulo articulo, String comentarios) {
         EstadoAriculo estado = articulo.getEstadoArticulo();
 
         switch (estado) {
@@ -79,13 +79,13 @@ public class Editor extends Usuario {
      * @param articulo El artículo revisado
      * @param comentarios Los comentarios de los revisores
      */
-    public void notificarInvestigador(Articulo articulo, String comentarios) {
+    public static void notificarInvestigador(Articulo articulo, String comentarios) {
         String mensaje = "Estimado autor,\n\n";
         mensaje += "Queremos informarle que el artículo con código " + articulo.getCodigo() + " ha sido revisado.\n";
         mensaje += "Comentarios de los revisores:\n";
         mensaje += comentarios + "\n";
         mensaje += "Atentamente,\n";
-        mensaje += "Equipo editorial de " + this.journal;
+        mensaje += "Equipo editorial";
 
         // Lógica para enviar correo electrónico al autor
         System.out.println(articulo.getDatosAutor().getCorreo() + "Resultado de revisión de artículo" + mensaje);
@@ -96,7 +96,7 @@ public class Editor extends Usuario {
      * @param articulo El artículo revisado
      * @param comentarios Los comentarios de los revisores
      */
-    public void guardarRevision(Articulo articulo, String comentarios) {
+    public static void guardarRevision(Articulo articulo, String comentarios) {
         String detallesRevision = "Código del artículo: " + articulo.getCodigo() + "\n";
         detallesRevision += "Comentarios de los revisores:\n";
         detallesRevision += comentarios + "\n";
