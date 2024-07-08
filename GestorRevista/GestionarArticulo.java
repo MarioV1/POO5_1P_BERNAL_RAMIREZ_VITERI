@@ -1,4 +1,4 @@
-package gestorrevista;
+
 
 import java.util.ArrayList;
 

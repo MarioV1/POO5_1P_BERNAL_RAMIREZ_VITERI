@@ -1,4 +1,4 @@
-package gestorrevista;
+
 
 public class Editor extends Usuario {
     private String journal;

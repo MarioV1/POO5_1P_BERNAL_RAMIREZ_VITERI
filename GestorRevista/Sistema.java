@@ -1,4 +1,4 @@
-package gestorrevista;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -135,13 +135,13 @@ public class Sistema {
         ArrayList<Usuario> ListaUsuarios=new ArrayList<Usuario>(Usuario.obtenerListaUsuarios("Usuarios.txt")) ;
         ArrayList<Articulo> listaArt=new ArrayList<Articulo>(Articulo.obtenerListaArticulos("Articulos.txt"));
         ArrayList<GestionarArticulo> listaGestion=new ArrayList<GestionarArticulo>();
+        System.out.println(ListaUsuarios);
 
         
 
         inicio("Usuarios.txt","Articulos.txt",listaGestion);
 
-        System.out.println(listaArt.get(0));
-        System.out.println(listaGestion.get(0).articulo.contenido+listaGestion.get(0).revisores.get(0).nombre+listaGestion.get(0).revisores.get(1).nombre+listaGestion.get(0).fecha+GestionarArticulo.id+listaGestion.get(0).id);
+      
     }
     
 }

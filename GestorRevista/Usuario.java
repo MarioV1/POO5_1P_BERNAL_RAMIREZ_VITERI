@@ -1,4 +1,4 @@
-package gestorrevista;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ public class Usuario {
             }
             if (datos.length==6) {
                 String nombre=datos[datos.length-6];
-                String apellido=datos[datos.length-4];
+                String apellido=datos[datos.length-5];
                 String correo=datos[datos.length-4];
                 String journal=datos[datos.length-3];
                 String usuario=datos[datos.length-2];

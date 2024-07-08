@@ -1,4 +1,4 @@
-package gestorrevista;
+
 
 import java.util.Random;
 import java.util.Scanner;
@@ -111,7 +111,8 @@ public class Autor extends Usuario {
             Revisor r2=listaRevisores.get(num2);
             revisoresAsignados.add(r1);
             revisoresAsignados.add(r2);
-            System.out.println("Revisores asignados:\n");
+            System.out.println();
+            System.out.println("Revisores asignados:");
             System.out.println(r1.nombre+" "+r1.apellido+" - Correo electrónico de notificación enviado a: "+r1.correo);
             System.out.println(r2.nombre+" "+r2.apellido+" - Correo electrónico de notificación enviado a: "+r2.correo);
             //Asignación Editor

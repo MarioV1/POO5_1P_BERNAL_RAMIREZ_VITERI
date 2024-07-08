@@ -1,4 +1,4 @@
-package gestorrevista;
+
 
 import java.util.Random;
 import java.io.BufferedWriter;
