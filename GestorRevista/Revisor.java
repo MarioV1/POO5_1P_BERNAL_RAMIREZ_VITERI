@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Revisor extends Usuario{
     //Variables de instancia
@@ -104,15 +105,10 @@ public class Revisor extends Usuario{
      * @param indice El índice del artículo en la lista de artículos asignados.
      * @param comentario El comentario a añadir.
      */
-    public void comentarArticulo(int indice, String comentario) {
-        if (indice >= 0 && indice < articulosAsignados.size()) {
-            Articulo articulo = articulosAsignados.get(indice);
-            articulo.setComentarios(comentario);
-            System.out.println("Comentario añadido al artículo.");
-        } else {
-            System.out.println("Índice de artículo inválido.");
-        }
+    public void comentarArticulo(Articulo articulo, String comentario) {
+        articulo.setComentarios(comentario);
     }
+
 
 
     /**
@@ -127,35 +123,91 @@ public class Revisor extends Usuario{
      *
      * @param articulo el artículo a aceptar
      */
-    public void aceptarArticulo(int indice) {
-    if (indice >= 0 && indice < articulosAsignados.size()) {
-        Articulo articulo = articulosAsignados.get(indice);
+    public void aceptarArticulo(Articulo articulo) {
         articulo.addRevisorAprobado(this);
         if (articulo.getRevisoresAprobados().size() >= 2) {
             articulo.setEstadoAriculo(EstadoAriculo.ACEPTADO);
-            System.out.println("Artículo aceptado.");
-        } else {
-            System.out.println("Artículo aprobado por un revisor. Se necesita una aprobación más.");
         }
-    } else {
-        System.out.println("Índice de artículo inválido.");
     }
-}
+
 
     /**
      * Rechaza un artículo para revisión y actualiza el estado del artículo.
      *
      * @param articulo el artículo a rechazar
      */
-    public void rechazarArticulo(int indice) {
-        if (indice >= 0 && indice < articulosAsignados.size()) {
-            Articulo articulo = articulosAsignados.get(indice);
-            articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
-            System.out.println("Artículo rechazado.");
-        } else {
-            System.out.println("Índice de artículo inválido.");
+    public void rechazarArticulo(Articulo articulo) {
+        articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
+    }
+
+    // Método para manejar opciones del revisor
+
+    public static void manejarOpcionesRevisor(String archivoUsuarios, String archivoArticulos, Revisor revisor) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Articulo> articulos = Articulo.obtenerListaArticulos(archivoArticulos);
+
+        while (true) {
+            System.out.println("************** OPCIONES DE REVISOR **************");
+            System.out.println("1. Ver artículos asignados");
+            System.out.println("2. Comentar artículo");
+            System.out.println("3. Aceptar artículo");
+            System.out.println("4. Rechazar artículo");
+            System.out.println("5. Salir");
+
+            int opcion = sc.nextInt();
+            sc.nextLine(); // consumir la nueva línea
+
+            switch (opcion) {
+                case 1:
+                    for (Articulo articulo : revisor.getArticulosAsignados()) {
+                        System.out.println("Código: " + articulo.getCodigo());
+                        System.out.println("Resumen: " + articulo.getResumen());
+                        System.out.println("Estado: " + articulo.getEstadoArticulo());
+                        System.out.println("------------------------------");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Ingrese el código del artículo:");
+                    String codigo = sc.nextLine();
+                    for (Articulo articulo : revisor.getArticulosAsignados()) {
+                        if (articulo.getCodigo().equals(codigo)) {
+                            System.out.println("Ingrese su comentario:");
+                            String comentario = sc.nextLine();
+                            revisor.comentarArticulo(articulo, comentario);
+                            
+                            break;
+                        }
+                    }
+                    break;
+                case 3:
+                    System.out.println("Ingrese el código del artículo:");
+                    codigo = sc.nextLine();
+                    for (Articulo articulo : revisor.getArticulosAsignados()) {
+                        if (articulo.getCodigo().equals(codigo)) {
+                            revisor.aceptarArticulo(articulo);;
+                            break;
+                        }
+                    }
+                    break;
+                case 4:
+                    System.out.println("Ingrese el código del artículo:");
+                    codigo = sc.nextLine();
+                    for (Articulo articulo : revisor.getArticulosAsignados()) {
+                        if (articulo.getCodigo().equals(codigo)) {
+                            revisor.rechazarArticulo(articulo);;
+                            break;
+                        }
+                    }
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
+                    break;
+            }
         }
     }
+
     
 
 

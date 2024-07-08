@@ -39,15 +39,18 @@ public class Sistema {
                     System.out.println("SE DA PASO A LAS OPCIONES DE EDITOR");
                 }
             }
-            if(rol.equalsIgnoreCase("r")){
+            if (rol.equalsIgnoreCase("r")) {
                 System.out.println("Ingrese usuario:");
                 String usuario = sc.next();
                 System.out.println("Ingrese su contraseña:");
                 String contraseña = sc.next();
-                if(iniciarSesion(usuario, contraseña, usuarios,"Revisor")==true){
-                    System.out.println("SE DA PASO A LAS OPCIONES DE REVISOR");
-                }else{
-
+                if (iniciarSesion(usuario, contraseña, usuarios, "Revisor")) {
+                    for (Usuario u : usuarios) {
+                        if (u instanceof Revisor && u.getNombre().equals(usuario)) {
+                            Revisor revisor = (Revisor) u;
+                            Revisor.manejarOpcionesRevisor(archivoUsuarios, archivoArticulos, revisor);
+                        }
+                    }
                 }
             }
         }
