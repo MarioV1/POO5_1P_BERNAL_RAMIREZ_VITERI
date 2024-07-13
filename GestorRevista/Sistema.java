@@ -33,12 +33,11 @@ public class Sistema {
             
             if(rol.equalsIgnoreCase("e")){
                 System.out.println("Ingrese usuario:");
-                String usuario = sc.next();
+                String usuario1 = sc.next();
                 System.out.println("Ingrese su contraseña:");
-                String contraseña = sc.next();
-                if(iniciarSesion(usuario, contraseña, usuarios,"Editor")==true){
+                String contraseña1 = sc.next();
+                if(iniciarSesion(usuario1, contraseña1, usuarios,"Editor")==true){
                     System.out.println("SE DA PASO A LAS OPCIONES DE EDITOR");
-                }
             }else if (rol.equalsIgnoreCase("r")) {
                 System.out.println("Ingrese usuario:");
                 String usuario = sc.next();
@@ -57,7 +56,8 @@ public class Sistema {
                 }
             }
         }
-        sc.close(); 
+        sc.close();
+    } 
     }
 
     /**

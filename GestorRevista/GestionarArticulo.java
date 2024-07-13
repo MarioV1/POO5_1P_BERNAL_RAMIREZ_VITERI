@@ -1,5 +1,5 @@
 
-
+import java.util.Random;
 import java.util.ArrayList;
 
 public class GestionarArticulo {
@@ -51,6 +51,23 @@ public class GestionarArticulo {
         }
     }
 
+    /**
+     * Método para que un editor acepte o rechace el artículo.
+     * 
+     * @param editor el editor que tiene la desición final
+     */
+
+    public void decisionFinal(){
+        
+        Random rd = new Random();
+        int decision = rd.nextInt(2);
+
+        if (decision == 0){
+            articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
+        }else{
+            articulo.setEstadoAriculo(EstadoAriculo.ACEPTADO);
+        }    
+    }
 
     public Articulo getArticulo() {
         return articulo;
