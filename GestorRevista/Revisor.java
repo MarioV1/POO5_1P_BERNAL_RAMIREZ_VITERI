@@ -7,6 +7,8 @@ public class Revisor extends Usuario {
     private String contraseña;
     private int numArticulos;
 
+    
+    //Constructores
     public Revisor(String nombre, String apellido, String correo, String especialidad, String usuario, String contraseña, int numArticulos) {
         super(nombre, apellido, correo);
         this.especialidad = especialidad;
@@ -14,6 +16,8 @@ public class Revisor extends Usuario {
         this.contraseña = contraseña;
         this.numArticulos = numArticulos;
     }
+
+    //Getters and Setters
 
     public String getEspecialidad() {
         return especialidad;
@@ -47,19 +51,43 @@ public class Revisor extends Usuario {
         this.numArticulos = numArticulos;
     }
 
+    /**
+     * Comenta un articulo
+     * @param articulo Articulo que se comenta
+     * @param comentario Comentario 
+     */
+
     public void comentarArticulo(Articulo articulo, String comentario) {
         articulo.setComentarios(comentario);
     }
+
+    /**
+     * Acepta un articulo
+     * @param gestion Articulo que se gestiona
+     */
 
     public void aceptarArticulo(GestionarArticulo gestion) {
         gestion.incrementarAceptaciones();
         System.out.println("Articulo Aceptado");
     }
 
+    
+    /**
+     * Rechaza un articulo
+     * @param gestion Archivo que se gestiona
+     */
+
     public void rechazarArticulo(GestionarArticulo gestion) {
         gestion.incrementarRechazos();
         System.out.println("Articulo Rechazado");
     }
+
+
+    /**
+     * Metodo para manejar las opciones del revisor
+     * @param ListaProcesos Es la lista de los procesos
+     * @param revisor Es el revisor que maneja las opciones
+     */
 
     public static void manejarOpcionesRevisor(ArrayList<GestionarArticulo> listaProcesos, Revisor revisor) {
         Scanner sc = new Scanner(System.in);
@@ -142,6 +170,13 @@ public class Revisor extends Usuario {
         }
         sc.close();
     }
+
+    
+    /**
+     * Busca en la lista de procesos el articulo mediante el codigo
+     * @param listaProcesos Lista de procesos
+     * @param codigo Codigo del articulo
+     */
 
     private static GestionarArticulo buscarProcesoPorCodigo(ArrayList<GestionarArticulo> listaProcesos, String codigo, Revisor revisor) {
         for (GestionarArticulo proceso : listaProcesos) {
