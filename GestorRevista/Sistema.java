@@ -30,6 +30,7 @@ public class Sistema {
             System.out.println("Ingrese su rol:\nR-Revisor\nE-Editor");
             String rol=sc.nextLine();
 
+            
             if(rol.equalsIgnoreCase("e")){
                 System.out.println("Ingrese usuario:");
                 String usuario = sc.next();
@@ -38,17 +39,19 @@ public class Sistema {
                 if(iniciarSesion(usuario, contraseña, usuarios,"Editor")==true){
                     System.out.println("SE DA PASO A LAS OPCIONES DE EDITOR");
                 }
-            }
-            if (rol.equalsIgnoreCase("r")) {
+            }else if (rol.equalsIgnoreCase("r")) {
                 System.out.println("Ingrese usuario:");
                 String usuario = sc.next();
                 System.out.println("Ingrese su contraseña:");
                 String contraseña = sc.next();
-                if (iniciarSesion(usuario, contraseña, usuarios, "Revisor")) {
+                if (iniciarSesion(usuario, contraseña, usuarios, "Revisor")==true) {
+                    System.out.println("SE DA PASO A LAS OPCIONES DE Revisor");
                     for (Usuario u : usuarios) {
-                        if (u instanceof Revisor && u.getNombre().equals(usuario)) {
+                        if (u instanceof Revisor) {
+                            System.out.println("SE DA PASO A LAS OPCIONES DE REVISOR");
                             Revisor revisor = (Revisor) u;
-                            Revisor.manejarOpcionesRevisor(archivoUsuarios, archivoArticulos, revisor);
+                            Revisor.manejarOpcionesRevisor(archivoUsuarios, archivoArticulos, revisor, listaGestion);
+                            break;
                         }
                     }
                 }

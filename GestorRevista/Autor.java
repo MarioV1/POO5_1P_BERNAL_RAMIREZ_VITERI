@@ -98,6 +98,7 @@ public class Autor extends Usuario {
                 if (usuario.getClass()==Revisor.class) {
                     Revisor revisor = (Revisor) usuario;//UPCASTING
                     listaRevisores.add(revisor);
+
                 }
                 if (usuario.getClass()==Editor.class) {
                     Editor editor= (Editor) usuario;//UPCASTING

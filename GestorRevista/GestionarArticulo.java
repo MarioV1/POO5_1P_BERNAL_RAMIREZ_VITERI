@@ -16,48 +16,42 @@ public class GestionarArticulo {
     public GestionarArticulo(){
         
     }
-
+    
     public GestionarArticulo(Articulo articulo, ArrayList<Revisor> revisor, Editor editor, String fecha){
         this.articulo = articulo;
         this.revisores = revisor;
         this.editor = editor;
         id++;
         this.fecha = fecha;
+        this.aceptaciones = 0;
+        this.rechazos = 0;
     }
     /**
      * Método para que un revisor acepte el artículo.
      *
      * @param revisor el revisor que acepta el artículo
      */
-    public void aceptarArticulo(Revisor revisor) {
-        if (revisores.contains(revisor)) {
-            aceptaciones++;
-            revisarEstadoArticulo();
+    public void incrementarAceptaciones() {
+        aceptaciones++;
+        if (aceptaciones >= 2) {
+            articulo.setEstadoAriculo(EstadoAriculo.ACEPTADO);
         }
+    }
 
     /**
      * Método para que un revisor rechaza el artículo.
      *
      * @param revisor el revisor que rechaza el artículo
      */
-    }
-    public void rechazarArticulo(Revisor revisor) {
-        if (revisores.contains(revisor)) {
-            rechazos++;
-            revisarEstadoArticulo();
-        }
-    }
-     /**
-     * Revisa el estado del artículo y lo actualiza si ha sido aceptado o rechazado por al menos dos revisores.
-     */
-    private void revisarEstadoArticulo() {
-        if (aceptaciones >= 2) {
-            articulo.setEstadoAriculo(EstadoAriculo.ACEPTADO);
-        } else if (rechazos >= 2) {
+    
+     public void incrementarRechazos() {
+        rechazos++;
+        if (rechazos >= 2) {
             articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
         }
-        
     }
+
+
     public Articulo getArticulo() {
         return articulo;
     }

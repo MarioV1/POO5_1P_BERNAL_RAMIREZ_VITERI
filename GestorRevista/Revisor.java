@@ -1,8 +1,5 @@
 
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -21,12 +18,14 @@ public class Revisor extends Usuario{
         this.usuario = usuario;
         this.contraseña = contraseña;
         this.numArticulos = numArticulos;
+        this.articulosAsignados= new ArrayList<>();
     }
     public Revisor(String especialidad, String usuario, String contraseña, int numArticulos){
         this.especialidad = especialidad;
         this.usuario = usuario;
         this.contraseña = contraseña;
         this.numArticulos = numArticulos;
+        this.articulosAsignados= new ArrayList<>();
     }
 
     
@@ -71,6 +70,7 @@ public class Revisor extends Usuario{
      * Añade un artículo a la lista de artículos asignados al revisor.
      * @param articulo El artículo a añadir.
      */
+    
     public void asignarArticulo(Articulo articulo) {
         articulosAsignados.add(articulo);
     }
@@ -81,23 +81,6 @@ public class Revisor extends Usuario{
         System.out.println("Artículos asignados:");
         for (int i = 0; i < articulosAsignados.size(); i++) {
             System.out.println((i + 1) + ". " + articulosAsignados.get(i).getCodigo() + " - " + articulosAsignados.get(i).getResumen());
-        }
-    }
-    /**
-     * Muestra los detalles de un artículo seleccionado.
-     * @param indice El índice del artículo en la lista de artículos asignados.
-     */
-    public void verDetalleArticulo(int indice) {
-        if (indice >= 0 && indice < articulosAsignados.size()) {
-            Articulo articulo = articulosAsignados.get(indice);
-            System.out.println("Código: " + articulo.getCodigo());
-            System.out.println("Autor: " + articulo.getDatosAutor().getNombre() + " " + articulo.getDatosAutor().getApellido());
-            System.out.println("Resumen: " + articulo.getResumen());
-            System.out.println("Contenido: " + articulo.getContenido());
-            System.out.println("Comentarios: " + articulo.getComentarios());
-            System.out.println("Estado: " + articulo.getEstadoArticulo());
-        } else {
-            System.out.println("Índice de artículo inválido.");
         }
     }
     /**
@@ -123,12 +106,11 @@ public class Revisor extends Usuario{
      *
      * @param articulo el artículo a aceptar
      */
-    public void aceptarArticulo(Articulo articulo) {
-        articulo.addRevisorAprobado(this);
-        if (articulo.getRevisoresAprobados().size() >= 2) {
-            articulo.setEstadoAriculo(EstadoAriculo.ACEPTADO);
-        }
+    public void aceptarArticulo(GestionarArticulo gestion) {
+        gestion.incrementarAceptaciones();
+        System.out.println("Articulo Aceptado");
     }
+
 
 
     /**
@@ -136,13 +118,15 @@ public class Revisor extends Usuario{
      *
      * @param articulo el artículo a rechazar
      */
-    public void rechazarArticulo(Articulo articulo) {
-        articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
+    public void rechazarArticulo(GestionarArticulo gestion) {
+        gestion.incrementarRechazos();
+        System.out.println("Articulo Rechazado");
     }
+
 
     // Método para manejar opciones del revisor
 
-    public static void manejarOpcionesRevisor(String archivoUsuarios, String archivoArticulos, Revisor revisor) {
+    public static void manejarOpcionesRevisor(String archivoUsuarios, String archivoArticulos, Revisor revisor, ArrayList<GestionarArticulo> listaGestion) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Articulo> articulos = Articulo.obtenerListaArticulos(archivoArticulos);
 
@@ -174,7 +158,7 @@ public class Revisor extends Usuario{
                             System.out.println("Ingrese su comentario:");
                             String comentario = sc.nextLine();
                             revisor.comentarArticulo(articulo, comentario);
-                            
+                            Articulo.escribirArticulo(archivoArticulos, articulo);
                             break;
                         }
                     }
@@ -182,9 +166,10 @@ public class Revisor extends Usuario{
                 case 3:
                     System.out.println("Ingrese el código del artículo:");
                     codigo = sc.nextLine();
-                    for (Articulo articulo : revisor.getArticulosAsignados()) {
-                        if (articulo.getCodigo().equals(codigo)) {
-                            revisor.aceptarArticulo(articulo);;
+                    for (GestionarArticulo gestion : listaGestion) {
+                        if (gestion.getArticulo().getCodigo().equals(codigo) && revisor.getArticulosAsignados().contains(gestion.getArticulo())) {
+                            revisor.aceptarArticulo(gestion);
+                            Articulo.escribirArticulo(archivoArticulos, gestion.getArticulo());
                             break;
                         }
                     }
@@ -192,9 +177,10 @@ public class Revisor extends Usuario{
                 case 4:
                     System.out.println("Ingrese el código del artículo:");
                     codigo = sc.nextLine();
-                    for (Articulo articulo : revisor.getArticulosAsignados()) {
-                        if (articulo.getCodigo().equals(codigo)) {
-                            revisor.rechazarArticulo(articulo);;
+                    for (GestionarArticulo gestion : listaGestion) {
+                        if (gestion.getArticulo().getCodigo().equals(codigo) && revisor.getArticulosAsignados().contains(gestion.getArticulo())) {
+                            revisor.rechazarArticulo(gestion);
+                            Articulo.escribirArticulo(archivoArticulos, gestion.getArticulo());
                             break;
                         }
                     }
