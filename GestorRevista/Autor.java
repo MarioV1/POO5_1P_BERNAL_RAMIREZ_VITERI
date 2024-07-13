@@ -60,7 +60,7 @@ public class Autor extends Usuario {
      * @param archivoUsuarios  Archivo donde se almacenan y escriben los usuarios
      * @param listaGestion Lista donde se agrega el proceso de revisión 
      */
-    public static void someterArt(String archivoArticulos,String archivoUsuarios, ArrayList<GestionarArticulo> listaGestion){
+    public static void someterArt(String archivoArticulos,String archivoUsuarios, String archivoProcesos){
         Scanner sc=new Scanner(System.in);
         System.out.println("**************REGISTRO DE DATOS AUTOR**************");
         System.out.println("Ingrese su nombre:");
@@ -82,7 +82,7 @@ public class Autor extends Usuario {
         System.out.println("Ingrese las palabras clave:");
         String palabrasClave=sc.nextLine();
         Autor autor1=(Autor) u;
-        Articulo articulo1=new Articulo(autor1, resumen, contenido, palabrasClave, " ", EstadoAriculo.REVISION, new ArrayList<>());
+        Articulo articulo1=new Articulo(autor1, resumen, contenido, palabrasClave, " ", EstadoAriculo.REVISION);
         System.out.println("Desea iniciar el proceso de revision?");
         String respuesta=sc.nextLine();
         if(respuesta.equalsIgnoreCase("si")){
@@ -124,7 +124,7 @@ public class Autor extends Usuario {
             //Inicio del proceso
             String fecha=new SimpleDateFormat("dd/MM/yyyy").format(new Date());//Se genera fecha de inicio del proceso en forma de string
             GestionarArticulo gestor=new GestionarArticulo(articulo1, revisoresAsignados, e, fecha);
-            listaGestion.add(gestor);
+            GestionarArticulo.escribirProceso(archivoProcesos,gestor);
         }
         else{
             System.out.println("EL ARTICULO NO FUE INGRESADO");

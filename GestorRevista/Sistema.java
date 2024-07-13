@@ -10,7 +10,7 @@ public class Sistema {
      * @param archivoArticulos Archivo de donde se leerán y extraerán los usuarios
      * @param listaGestion Lista donde se guardará el proceso en caso de revisión en caso de someter artículo
      */
-    public static void inicio(String archivoUsuarios,String archivoArticulos, ArrayList<GestionarArticulo> listaGestion){
+    public static void inicio(String archivoUsuarios,String archivoArticulos, String archivoProcesos){
         
         Scanner sc = new Scanner(System.in);
         ArrayList<Usuario> usuarios=Usuario.obtenerListaUsuarios(archivoUsuarios);
@@ -22,7 +22,7 @@ public class Sistema {
         if(opcion.equalsIgnoreCase("s")){
             System.out.println("**************GESTOR DE PUBLICACIONES**************");
             System.out.println("SE DA PASO A LAS OPCIONES DE AUTOR");
-            Autor.someterArt(archivoArticulos,archivoUsuarios,listaGestion);
+            Autor.someterArt(archivoArticulos,archivoUsuarios,archivoProcesos);
             System.out.println("-------------------------------------------------");
 
         }if(opcion.equalsIgnoreCase("i")){
@@ -49,7 +49,7 @@ public class Sistema {
                         if (u instanceof Revisor) {
                             System.out.println("SE DA PASO A LAS OPCIONES DE REVISOR");
                             Revisor revisor = (Revisor) u;
-                            Revisor.manejarOpcionesRevisor(archivoUsuarios, archivoArticulos, revisor, listaGestion);
+                            //Revisor.manejarOpcionesRevisor(archivoUsuarios, archivoArticulos, revisor, listaGestion);
                             break;
                         }
                     }
@@ -137,13 +137,9 @@ public class Sistema {
         //PROGRAMA
         ArrayList<Usuario> ListaUsuarios=new ArrayList<Usuario>(Usuario.obtenerListaUsuarios("Usuarios.txt")) ;
         ArrayList<Articulo> listaArt=new ArrayList<Articulo>(Articulo.obtenerListaArticulos("Articulos.txt"));
-        ArrayList<GestionarArticulo> listaGestion=new ArrayList<GestionarArticulo>();
-        System.out.println(ListaUsuarios);
-
-        
-
-        inicio("Usuarios.txt","Articulos.txt",listaGestion);
-
+        inicio("Usuarios.txt","Articulos.txt","Procesos.txt");
+        ArrayList<GestionarArticulo> listaGestion=new ArrayList<GestionarArticulo>(GestionarArticulo.obtenerListaProcesos("Procesos.txt"));
+        System.out.println(listaGestion.get(0).articulo.estadoAriculo);
       
     }
     

@@ -9,7 +9,6 @@ public class Revisor extends Usuario{
     private String usuario;
     private String contraseña;
     private int numArticulos;
-    private ArrayList<Articulo> articulosAsignados;
     
     //Constructor
     public Revisor(String nombre, String apellido, String correo,String especialidad, String usuario, String contraseña, int numArticulos){
@@ -18,14 +17,14 @@ public class Revisor extends Usuario{
         this.usuario = usuario;
         this.contraseña = contraseña;
         this.numArticulos = numArticulos;
-        this.articulosAsignados= new ArrayList<>();
+        
     }
     public Revisor(String especialidad, String usuario, String contraseña, int numArticulos){
         this.especialidad = especialidad;
         this.usuario = usuario;
         this.contraseña = contraseña;
         this.numArticulos = numArticulos;
-        this.articulosAsignados= new ArrayList<>();
+        
     }
 
     
@@ -63,26 +62,22 @@ public class Revisor extends Usuario{
     public void setNumArticulos(int numArticulos){
         this.numArticulos = numArticulos;
     }
-    public ArrayList<Articulo> getArticulosAsignados() {
-        return articulosAsignados;
-    }
+   
     /**
      * Añade un artículo a la lista de artículos asignados al revisor.
      * @param articulo El artículo a añadir.
      */
     
-    public void asignarArticulo(Articulo articulo) {
-        articulosAsignados.add(articulo);
-    }
+   
     /**
      * Muestra la lista de artículos asignados al revisor.
      */
-    public void verArticulosAsignados() {
+    /*public void verArticulosAsignados() {
         System.out.println("Artículos asignados:");
         for (int i = 0; i < articulosAsignados.size(); i++) {
             System.out.println((i + 1) + ". " + articulosAsignados.get(i).getCodigo() + " - " + articulosAsignados.get(i).getResumen());
-        }
-    }
+        }*/
+    //}
     /**
      * Comenta un artículo.
      * @param indice El índice del artículo en la lista de artículos asignados.
@@ -126,7 +121,7 @@ public class Revisor extends Usuario{
 
     // Método para manejar opciones del revisor
 
-    public static void manejarOpcionesRevisor(String archivoUsuarios, String archivoArticulos, Revisor revisor, ArrayList<GestionarArticulo> listaGestion) {
+    /*public static void manejarOpcionesRevisor(String archivoUsuarios, String archivoArticulos, Revisor revisor, ArrayList<GestionarArticulo> listaGestion) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Articulo> articulos = Articulo.obtenerListaArticulos(archivoArticulos);
 
@@ -208,7 +203,7 @@ public class Revisor extends Usuario{
                 ", contraseña='" + contraseña + '\'' +
                 ", numArticulos=" + numArticulos +
                 '}';
-    }
+    }*/
 
 
 
