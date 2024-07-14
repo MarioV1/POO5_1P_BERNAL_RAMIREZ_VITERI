@@ -3,6 +3,7 @@ import java.util.Random;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GestionarArticulo {
     //Variables de instancia
@@ -69,15 +70,19 @@ public class GestionarArticulo {
      */
 
     public void decisionFinal(){
-        
-        Random rd = new Random();
-        int decision = rd.nextInt(2);
+        System.out.println("Existen dos opiniones diferntes del artículo");
+        Scanner sc = new Scanner(System.in);
 
-        if (decision == 0){
-            articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
-        }else{
+        System.out.println("¿Aceptar (A) o rechazar (R)?");
+        String opcion = sc.nextLine();
+
+        if (opcion.equalsIgnoreCase("a")) {
             articulo.setEstadoAriculo(EstadoAriculo.ACEPTADO);
-        }    
+            
+        }else if (opcion.equalsIgnoreCase("r")){
+            articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
+        }
+        sc.close();
     }
 
     public Articulo getArticulo() {

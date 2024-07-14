@@ -105,6 +105,7 @@ public class Editor extends Usuario {
         ManejoArchivos.escribirArchivo("revisiones.txt", detallesRevision);
     }
    
+    
 
     // Método toString para representar el objeto como cadena
     @Override
