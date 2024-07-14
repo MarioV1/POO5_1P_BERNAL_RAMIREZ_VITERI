@@ -1,5 +1,4 @@
 
-import java.util.Random;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -70,10 +69,10 @@ public class GestionarArticulo {
      */
 
     public void decisionFinal(){
-        System.out.println("Existen dos opiniones diferntes del artículo");
+        System.out.println("De acuerdo a los comentarios y decisiones de los autores");
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("¿Aceptar (A) o rechazar (R)?");
+        System.out.println("¿Aceptar (A) o rechazar (R) el artículo?");
         String opcion = sc.nextLine();
 
         if (opcion.equalsIgnoreCase("a")) {
@@ -81,41 +80,15 @@ public class GestionarArticulo {
             
         }else if (opcion.equalsIgnoreCase("r")){
             articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
+        } else {
+            System.out.println("Opción inválida");
         }
+
+        System.out.println("*****************************");
         sc.close();
     }
 
-    public Articulo getArticulo() {
-        return articulo;
-    }
 
-    public void setArticulo(Articulo articulo) {
-        this.articulo = articulo;
-    }
-
-    public ArrayList<Revisor> getRevisores() {
-        return revisores;
-    }
-
-    public void setRevisores(ArrayList<Revisor> revisores) {
-        this.revisores = revisores;
-    }
-
-    public Editor getEditor() {
-        return editor;
-    }
-
-    public void setEditor(Editor editor) {
-        this.editor = editor;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
 
     /*public static int getId() {
         return id;

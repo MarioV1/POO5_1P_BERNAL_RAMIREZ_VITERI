@@ -1,5 +1,5 @@
-
-
+import java.util.ArrayList;
+import java.util.Scanner;
 public class Editor extends Usuario {
     private String journal;
     private String usuario;
@@ -42,26 +42,23 @@ public class Editor extends Usuario {
     public void setContraseña(String contraseña){
         this.contraseña = contraseña;
     }
+
     //Métodos    
-/**
-     * Método para revisar los comentarios de los revisores y tomar una decisión sobre la publicación del artículo.
+    /**
+     * Método para revisar los comentarios de los revisores
      * @param articulo El artículo que se está revisando
-     * @param comentarios Comentarios adicionales a los revisores
      */
-    public static void revisarComentarios(Articulo articulo, String comentarios) {
+    public static void desicionRevisores(Articulo articulo) {
+        
         EstadoAriculo estado = articulo.getEstadoArticulo();
 
         switch (estado) {
             case ACEPTADO:
                 System.out.println("Artículo aceptado para publicación.");
-                notificarInvestigador(articulo, comentarios + "\nArtículo aceptado para publicación.");
-                guardarRevision(articulo, comentarios + "\nArtículo aceptado para publicación.");
                 break;
 
             case RECHAZADO:
                 System.out.println("Artículo rechazado para publicación.");
-                notificarInvestigador(articulo, comentarios + "\nArtículo rechazado para publicación.");
-                guardarRevision(articulo, comentarios + "\nArtículo rechazado para publicación.");
                 break;
 
             case REVISION:
@@ -74,52 +71,134 @@ public class Editor extends Usuario {
         }
     }
 
+        /**
+     * Método para revisar los comentarios de los articulos dejados por un revisor
+     * @param revisor Revisor asignado al articulo
+     * @param articulo Articulo con sus comentarios
+     */
+    public static void revisarComentarios(Articulo articulo){
+        System.out.println("Dejó el siguiente comentario\n" + articulo.getComentarios());
+    }
+
+
     /**
      * Método para notificar al investigador del resultado final por correo electrónico.
      * @param articulo El artículo revisado
      * @param comentarios Los comentarios de los revisores
      */
-    public static void notificarInvestigador(Articulo articulo, String comentarios) {
-        String mensaje = "Estimado autor,\n\n";
+    public static void notificarInvestigador(Articulo articulo, Editor editor) {
+        String mensaje = "Estimado autor," + articulo.getDatosAutor().getNombre() + "\n\n";
         mensaje += "Queremos informarle que el artículo con código " + articulo.getCodigo() + " ha sido revisado.\n";
         mensaje += "Comentarios de los revisores:\n";
-        mensaje += comentarios + "\n";
+        mensaje += articulo.getComentarios() + "\n";
         mensaje += "Atentamente,\n";
-        mensaje += "Equipo editorial";
+        mensaje += "Equipo editorial " + editor.journal;
 
         // Lógica para enviar correo electrónico al autor
-        System.out.println(articulo.getDatosAutor().getCorreo() + "Resultado de revisión de artículo" + mensaje);
+        System.out.println("**************Generando Notificación**************");
+        System.out.println(articulo.getDatosAutor().getCorreo() + "\nResultado de revisión de artículo\n" + mensaje);
     }
+
+
+        /**
+     * Busca en la lista de procesos el articulo mediante el codigo
+     * @param listaProcesos Lista de procesos
+     * @param codigo Codigo del articulo
+     */
+
+     private static GestionarArticulo buscarProcesoPorCodigo(ArrayList<GestionarArticulo> listaProcesos, String codigo) {
+        for (GestionarArticulo proceso : listaProcesos) {
+            if (proceso.articulo.getCodigo().equals(codigo)) {
+                return proceso;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Método para guardar los detalles de la revisión en un archivo `revisiones.txt`.
      * @param articulo El artículo revisado
-     * @param comentarios Los comentarios de los revisores
      */
-    public static void guardarRevision(Articulo articulo, String comentarios) {
-        String detallesRevision = "Código del artículo: " + articulo.getCodigo() + "\n";
-        detallesRevision += "Comentarios de los revisores:\n";
-        detallesRevision += comentarios + "\n";
+    public static void guardarRevision(Articulo articulo) {
+        String detallesRevision = "Código del artículo: " + articulo.getCodigo() + "\n" + "Comentarios del revisor:\n" + 
+        articulo.getComentarios() + "\n";
 
-        // Lógica para guardar los detalles de la revisión en el archivo `revisiones.txt`
-        ManejoArchivos.escribirArchivo("revisiones.txt", detallesRevision);
+        System.out.println("Guardando Revisión...\n" + detallesRevision);
+
     }
    
+    /**
+     * Método para manejar las Opciones del sistema del Editor
+     * @param listaProcesos La lista de procesos
+     * @param editor Editor asignado
+     */
+    public static void manejarOpcionesEditor(ArrayList<GestionarArticulo> listaProcesos, Editor editor) {
+        Scanner sc = new Scanner(System.in);
     
+        System.out.println("**************OPCIONES DE EDITOR**************");
+    
+        boolean codigoValido = false;
 
-    // Método toString para representar el objeto como cadena
-    @Override
-    public String toString() {
-        return "Editor{" +
-                "nombre='" + getNombre() + '\'' +
-                ", apellido='" + getApellido() + '\'' +
-                ", correoElectronico='" + getCorreo() + '\'' +
-                ", journal='" + journal + '\'' +
-                ", usuario='" + usuario + '\'' +
-                ", contraseña='" + contraseña + '\'' +
-                '}';
+        System.out.println("Ingrese el código del Artículo deseado");
+        String codigoIngresado = sc.nextLine();
+
+        while (!codigoValido) {
+            GestionarArticulo validarProceso = buscarProcesoPorCodigo(listaProcesos, codigoIngresado);
+            if (validarProceso != null) {
+                System.out.println("**************OPCIONES DEL ARTÍCULO**************");
+                System.out.println("1. Ver Comentarios");
+                System.out.println("2. Ver decisiones de los Revisores");
+                System.out.println("3. Salir");
+                System.out.println("Ingrese una opción:");
+                
+                int opcion = sc.nextInt();
+                sc.nextLine(); // Consume newline
+                System.out.println("-------------------------------------------------");
+                
+                switch (opcion) {
+                    case 1:
+                        System.out.println("Los comentarios son los siguientes:");
+                        for (Revisor revisor : validarProceso.revisores) {
+                            System.out.println("El revisor " + revisor.getNombre());
+                            revisarComentarios(validarProceso.articulo);
+                            System.out.println("****************************************");
+                        }
+                        break;
+    
+                    case 2:
+                        System.out.println("Las decisiones de cada Revisor son las siguientes:");
+                        for (Revisor revisor : validarProceso.revisores) {
+                            System.out.println("El revisor " + revisor.getNombre());
+                            desicionRevisores(validarProceso.articulo);
+                            System.out.println("****************************************");
+                        }
+                        validarProceso.decisionFinal();
+                        guardarRevision(validarProceso.articulo);
+                        notificarInvestigador(validarProceso.articulo, editor);
+                        codigoValido = true;
+                        System.out.println("Saliendo...");
+                        break;
+    
+                    case 3:
+                        codigoValido = true;
+                        System.out.println("Saliendo...");
+                        break;
+    
+                    default:
+                        System.out.println("Opción no válida");
+                        break;
+                } 
+            } else {
+                System.out.println("Artículo no encontrado.\nIntente más tarde.\n**********************************");
+                break;
+            }
+            
+        }
+        sc.close();
     }
 }
+    
 
 
 

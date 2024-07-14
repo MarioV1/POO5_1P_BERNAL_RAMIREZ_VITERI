@@ -23,15 +23,24 @@ public class Sistema {
             System.out.println("**************Iniciar Sesión**************");
             System.out.println("Ingrese su rol:\nR-Revisor\nE-Editor");
             String rol = sc.nextLine();
-
+            System.out.println("-------------------------------------------------");
             System.out.println("Ingrese usuario:");
             String usuario = sc.next();
             System.out.println("Ingrese su contraseña:");
             String contraseña = sc.next();
+            System.out.println("-------------------------------------------------");
 
             if (rol.equalsIgnoreCase("e")) {
                 if (iniciarSesion(usuario, contraseña, usuarios, "Editor")) {
                     System.out.println("SE DA PASO A LAS OPCIONES DE EDITOR");
+                    for (Usuario u: usuarios){
+                        if (u instanceof Editor){
+                            Editor editor= (Editor) u;
+                            if (editor.getUsuario().equals(usuario)){
+                                Editor.manejarOpcionesEditor(listaProcesos, editor);
+                            }
+                        }
+                    }
                 }
             } else if (rol.equalsIgnoreCase("r")) {
                 if (iniciarSesion(usuario, contraseña, usuarios, "Revisor")) {
@@ -47,6 +56,7 @@ public class Sistema {
                     }
                 }
             }
+            
         }
         sc.close();
     }
@@ -57,12 +67,14 @@ public class Sistema {
                 Editor editor = (Editor) u;
                 if (editor.getUsuario().equals(usuario) && editor.getContraseña().equals(contraseña)) {
                     System.out.println("INGRESO EXITOSO");
+                    System.out.println("-------------------------------------------------");
                     return true;
                 }
             } else if (u instanceof Revisor && rol.equals("Revisor")) {
                 Revisor revisor = (Revisor) u;
                 if (revisor.getUsuario().equals(usuario) && revisor.getContraseña().equals(contraseña)) {
                     System.out.println("INGRESO EXITOSO");
+                    System.out.println("-------------------------------------------------");
                     return true;
                 }
             }

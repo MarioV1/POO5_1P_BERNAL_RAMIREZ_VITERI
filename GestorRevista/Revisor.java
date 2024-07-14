@@ -111,9 +111,9 @@ public class Revisor extends Usuario {
                 case 1:
                     System.out.println("Artículos asignados:");
                     for (GestionarArticulo proceso : listaProcesos) {
-                        if (proceso.getRevisores().contains(revisor)) {
-                            System.out.println("Código: " + proceso.getArticulo().getCodigo());
-                            System.out.println("Título: " + proceso.getArticulo().getResumen());
+                        if (proceso.revisores.contains(revisor)) {
+                            System.out.println("Código: " + proceso.articulo.getCodigo());
+                            System.out.println("Título: " + proceso.articulo.getResumen());
                         }
                     }
                     break;
@@ -122,7 +122,7 @@ public class Revisor extends Usuario {
                     String codigo = sc.nextLine();
                     GestionarArticulo proceso = buscarProcesoPorCodigo(listaProcesos, codigo, revisor);
                     if (proceso != null) {
-                        Articulo articulo = proceso.getArticulo();
+                        Articulo articulo = proceso.articulo;
                         System.out.println("Resumen: " + articulo.getResumen());
                         System.out.println("Contenido: " + articulo.getContenido());
                         System.out.println("Comentarios: " + articulo.getComentarios());
@@ -138,7 +138,7 @@ public class Revisor extends Usuario {
                     if (proceso != null) {
                         System.out.println("Ingrese su comentario:");
                         String comentario = sc.nextLine();
-                        revisor.comentarArticulo(proceso.getArticulo(), comentario);
+                        revisor.comentarArticulo(proceso.articulo, comentario);
                     } else {
                         System.out.println("Artículo no encontrado.");
                     }
@@ -180,7 +180,7 @@ public class Revisor extends Usuario {
 
     private static GestionarArticulo buscarProcesoPorCodigo(ArrayList<GestionarArticulo> listaProcesos, String codigo, Revisor revisor) {
         for (GestionarArticulo proceso : listaProcesos) {
-            if (proceso.getArticulo().getCodigo().equals(codigo) && proceso.getRevisores().contains(revisor)) {
+            if (proceso.articulo.getCodigo().equals(codigo) && proceso.revisores.contains(revisor)) {
                 return proceso;
             }
         }
