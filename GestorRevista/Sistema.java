@@ -108,5 +108,11 @@ public class Sistema {
         Usuario.EscribirUsuario("Usuarios.txt", u10);
         // PROGRAMA
         inicio("Usuarios.txt", "Articulos.txt", "Procesos.txt");
+        
+        ManejoArchivos.limpiarArchivo("Procesos.txt");
+
+        for(GestionarArticulo procesos : GestionarArticulo.obtenerListaProcesos("Procesos.txt")){
+            //ManejoArchivos.escribirArchivo("Procesos.txt", procesos);
+        }
     }
 }
