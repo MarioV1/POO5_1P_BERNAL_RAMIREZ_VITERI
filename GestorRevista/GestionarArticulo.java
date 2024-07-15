@@ -80,46 +80,7 @@ public class GestionarArticulo {
         }    
     }
 
-    public Articulo getArticulo() {
-        return articulo;
-    }
-
-    public void setArticulo(Articulo articulo) {
-        this.articulo = articulo;
-    }
-
-    public ArrayList<Revisor> getRevisores() {
-        return revisores;
-    }
-
-    public void setRevisores(ArrayList<Revisor> revisores) {
-        this.revisores = revisores;
-    }
-
-    public Editor getEditor() {
-        return editor;
-    }
-
-    public void setEditor(Editor editor) {
-        this.editor = editor;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    /*public static int getId() {
-        return id;
-    }
-
-    public static void setId(int id) {
-        GestionarArticulo.id = id;
-    }*/
-
+ 
     public int getAceptaciones() {
         return aceptaciones;
     }

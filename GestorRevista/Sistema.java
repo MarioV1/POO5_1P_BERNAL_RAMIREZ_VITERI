@@ -32,6 +32,14 @@ public class Sistema {
             if (rol.equalsIgnoreCase("e")) {
                 if (iniciarSesion(usuario, contraseña, usuarios, "Editor")) {
                     System.out.println("SE DA PASO A LAS OPCIONES DE EDITOR");
+                    for (Usuario u: usuarios){
+                        if (u instanceof Editor){
+                            Editor editor= (Editor) u;
+                            if (editor.getUsuario().equals(usuario)){
+                                Editor.manejarOpcionesEditor(listaProcesos, editor);
+                            }
+                        }
+                    }
                 }
             } else if (rol.equalsIgnoreCase("r")) {
                 if (iniciarSesion(usuario, contraseña, usuarios, "Revisor")) {
