@@ -10,8 +10,7 @@ public class Sistema {
      * @param archivoArticulos Archivo de donde se leerán y extraerán los usuarios
      * @param listaGestion Lista donde se guardará el proceso en caso de revisión en caso de someter artículo
      */
-    public static void inicio(String archivoUsuarios,String archivoArticulos, String archivoProcesos){
-        
+    public static void inicio(String archivoUsuarios,String archivoArticulos, ArrayList<GestionarArticulo> listaProcesos){
         Scanner sc = new Scanner(System.in);
         ArrayList<Usuario> usuarios=Usuario.obtenerListaUsuarios(archivoUsuarios);
         System.out.println("**************ARTÍCULOS CIENTÍFICOS**************");
@@ -22,7 +21,7 @@ public class Sistema {
         if(opcion.equalsIgnoreCase("s")){
             System.out.println("**************GESTOR DE PUBLICACIONES**************");
             System.out.println("SE DA PASO A LAS OPCIONES DE AUTOR");
-            Autor.someterArt(archivoArticulos,archivoUsuarios,archivoProcesos);
+            Autor.someterArt(archivoArticulos,archivoUsuarios,listaProcesos);
             System.out.println("-------------------------------------------------");
 
         }if(opcion.equalsIgnoreCase("i")){
@@ -135,11 +134,13 @@ public class Sistema {
         Usuario.EscribirUsuario("Usuarios.txt",u9);
         Usuario.EscribirUsuario("Usuarios.txt",u10);
         //PROGRAMA
-        ArrayList<Usuario> ListaUsuarios=new ArrayList<Usuario>(Usuario.obtenerListaUsuarios("Usuarios.txt")) ;
-        ArrayList<Articulo> listaArt=new ArrayList<Articulo>(Articulo.obtenerListaArticulos("Articulos.txt"));
-        inicio("Usuarios.txt","Articulos.txt","Procesos.txt");
-        ArrayList<GestionarArticulo> listaGestion=new ArrayList<GestionarArticulo>(GestionarArticulo.obtenerListaProcesos("Procesos.txt"));
-        System.out.println(listaGestion.get(0).revisores.get(0).nombre);
+        ArrayList<GestionarArticulo> listaProcesos=new ArrayList<>(GestionarArticulo.obtenerListaProcesos("Revisiones.txt"));
+        inicio("Usuarios.txt","Articulos.txt",listaProcesos);
+        ManejoArchivos.limpiarArchivo("Revisiones.txt");
+        for (GestionarArticulo proceso : listaProcesos) {
+            GestionarArticulo.escribirProceso("Revisiones.txt", proceso);
+        }
+        
       
     }
     

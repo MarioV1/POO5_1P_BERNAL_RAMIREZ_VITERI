@@ -136,7 +136,9 @@ public class GestionarArticulo {
         this.rechazos = rechazos;
     }
 
-
+    /**
+     * Método para escribir el proceso de revision
+     */
     public static void escribirProceso(String nombreArchivo, GestionarArticulo proceso){
         FileWriter fichero = null;
         BufferedWriter bw = null;
@@ -191,7 +193,9 @@ public class GestionarArticulo {
         }
     }
 
-
+     /**
+     * Método para obtener una lista con procesos de revision    
+     */
     public static ArrayList<GestionarArticulo> obtenerListaProcesos(String nombreArchivo){
         ArrayList<String> lineas=ManejoArchivos.LeeFichero(nombreArchivo); 
         ArrayList<GestionarArticulo> listaProcesos=new ArrayList<>();
