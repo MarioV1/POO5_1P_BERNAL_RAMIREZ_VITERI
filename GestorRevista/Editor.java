@@ -134,8 +134,9 @@ public class Editor extends Usuario {
      */
     public static void notificarInvestigador(Articulo articulo, Editor editor) {
         // Genera el mensaje de notificación
-        String mensaje = "Estimado autor," + articulo.getDatosAutor().getNombre() + "\n\n";
+        String mensaje = "Estimado autor, " + articulo.getDatosAutor().getNombre() + "\n\n";
         mensaje += "Queremos informarle que el artículo con código " + articulo.getCodigo() + " ha sido revisado.\n";
+        mensaje += "Su articulo ha sido: " + articulo.getEstadoArticulo() + "\n";
         mensaje += "Comentarios de los revisores:\n";
         mensaje += articulo.getComentarios() + "\n";
         mensaje += "Atentamente,\n";
@@ -143,7 +144,7 @@ public class Editor extends Usuario {
 
         // Simula el envío de correo electrónico al autor
         System.out.println("**************Generando Notificación**************");
-        System.out.println(articulo.getDatosAutor().getCorreo() + "\nResultado de revisión de artículo\n" + mensaje);
+        System.out.println("Para " + articulo.getDatosAutor().getCorreo() + "\nResultado de revisión de artículo\n" + mensaje);
     }
 
     /**
@@ -168,7 +169,7 @@ public class Editor extends Usuario {
      */
     public static void guardarRevision(Articulo articulo) {
         // Detalles de la revisión
-        String detallesRevision = "Código del artículo: " + articulo.getCodigo() + "\n" + "Comentarios del revisor:\n" +
+        String detallesRevision = "Código del artículo: " + articulo.getCodigo() + "\nEstado del artículo: " + articulo.getEstadoArticulo() + "\n" + "Comentarios del revisor:\n" +
                 articulo.getComentarios() + "\n";
 
         // Simula el guardado de la revisión
