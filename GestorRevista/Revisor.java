@@ -90,7 +90,7 @@ public class Revisor extends Usuario {
      * @param revisor Es el revisor que maneja las opciones
      */
 
-    public static void manejarOpcionesRevisor(ArrayList<GestionarArticulo> listaProcesos, Revisor revisor) {
+     public static void manejarOpcionesRevisor(ArrayList<GestionarArticulo> listaProcesos, Revisor revisor) {
         Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.println("**************OPCIONES DE REVISOR**************");
@@ -103,18 +103,20 @@ public class Revisor extends Usuario {
             System.out.println("Ingrese una opción:");
             int opcion = sc.nextInt();
             sc.nextLine(); // Consume newline
-
+    
             if (opcion == 6) {
                 break;
             }
-
+    
             switch (opcion) {
                 case 1:
                     System.out.println("Artículos asignados:");
                     for (GestionarArticulo proceso : listaProcesos) {
-                        if (proceso.revisores.contains(revisor)) {
-                            System.out.println("Código: " + proceso.articulo.getCodigo());
-                            System.out.println("Título: " + proceso.articulo.getResumen());
+                        for (Revisor r : proceso.revisores) {
+                            if (r.getUsuario()==revisor.getUsuario()) {
+                                System.out.println("Código: " + proceso.articulo.getCodigo());
+                                System.out.println("Título: " + proceso.articulo.getResumen());
+                            }
                         }
                     }
                     break;
@@ -171,6 +173,7 @@ public class Revisor extends Usuario {
         }
         sc.close();
     }
+    
 
     
     /**
@@ -179,16 +182,19 @@ public class Revisor extends Usuario {
      * @param codigo Codigo del articulo
      */
 
-    private static GestionarArticulo buscarProcesoPorCodigo(ArrayList<GestionarArticulo> listaProcesos, String codigo, Revisor revisor) {
+     private static GestionarArticulo buscarProcesoPorCodigo(ArrayList<GestionarArticulo> listaProcesos, String codigo, Revisor revisor) {
         for (GestionarArticulo proceso : listaProcesos) {
-            System.out.println(proceso);
-            if (proceso.articulo.getCodigo().equals(codigo) && proceso.revisores.contains(revisor)) {
-                return proceso;
+            if (proceso.articulo.getCodigo().equals(codigo)) {
+                for (Revisor r : proceso.revisores) {
+                    if (r.getUsuario()==revisor.getUsuario()) {
+                        return proceso;
+                    }
+                }
             }
         }
         return null;
     }
-
+    
     @Override
     public String toString() {
         return "Revisor [especialidad=" + especialidad + ", usuario=" + usuario + ", nombre=" + nombre + ", contraseña="
