@@ -1,5 +1,6 @@
 
 import java.util.Random;
+import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -62,23 +63,32 @@ public class GestionarArticulo {
         }
     }
 
-    /**
+     /**
      * Método para que un editor acepte o rechace el artículo.
      * 
      * @param editor el editor que tiene la desición final
      */
 
     public void decisionFinal(){
-        
-        Random rd = new Random();
-        int decision = rd.nextInt(2);
+        System.out.println("De acuerdo a los comentarios y decisiones de los autores");
+        Scanner sc = new Scanner(System.in);
 
-        if (decision == 0){
-            articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
-        }else{
+        System.out.println("¿Aceptar (A) o rechazar (R) el artículo?");
+        String opcion = sc.nextLine();
+
+        if (opcion.equalsIgnoreCase("a")) {
             articulo.setEstadoAriculo(EstadoAriculo.ACEPTADO);
-        }    
+            
+        }else if (opcion.equalsIgnoreCase("r")){
+            articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
+        } else {
+            System.out.println("Opción inválida");
+        }
+
+        System.out.println("*****************************");
+        sc.close();
     }
+
 
  
     public int getAceptaciones() {
