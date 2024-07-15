@@ -1,210 +1,200 @@
 
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Revisor extends Usuario{
-    //Variables de instancia
+public class Revisor extends Usuario {
     private String especialidad;
     private String usuario;
     private String contraseña;
     private int numArticulos;
+
     
-    //Constructor
-    public Revisor(String nombre, String apellido, String correo,String especialidad, String usuario, String contraseña, int numArticulos){
-        super(nombre,apellido,correo);
+    //Constructores
+    public Revisor(String nombre, String apellido, String correo, String especialidad, String usuario, String contraseña, int numArticulos) {
+        super(nombre, apellido, correo);
         this.especialidad = especialidad;
         this.usuario = usuario;
         this.contraseña = contraseña;
         this.numArticulos = numArticulos;
-        
-    }
-    public Revisor(String especialidad, String usuario, String contraseña, int numArticulos){
-        this.especialidad = especialidad;
-        this.usuario = usuario;
-        this.contraseña = contraseña;
-        this.numArticulos = numArticulos;
-        
     }
 
-    
+    //Getters and Setters
 
-
-    //getters y setters
-    public String getEspecialidad(){
+    public String getEspecialidad() {
         return especialidad;
     }
 
-    public void setEspecialidad(String especialidad){
+    public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
     }
 
-    public String getUsuario(){
+    public String getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(String usuario){
+    public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
 
-    public String getContraseña(){
+    public String getContraseña() {
         return contraseña;
     }
 
-    public void setContraseña(String contraseña){
+    public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
 
-    public int getNumArticulos(){
+    public int getNumArticulos() {
         return numArticulos;
     }
 
-    public void setNumArticulos(int numArticulos){
+    public void setNumArticulos(int numArticulos) {
         this.numArticulos = numArticulos;
     }
-   
+
     /**
-     * Añade un artículo a la lista de artículos asignados al revisor.
-     * @param articulo El artículo a añadir.
+     * Comenta un articulo
+     * @param articulo Articulo que se comenta
+     * @param comentario Comentario 
      */
-    
-   
-    /**
-     * Muestra la lista de artículos asignados al revisor.
-     */
-    /*public void verArticulosAsignados() {
-        System.out.println("Artículos asignados:");
-        for (int i = 0; i < articulosAsignados.size(); i++) {
-            System.out.println((i + 1) + ". " + articulosAsignados.get(i).getCodigo() + " - " + articulosAsignados.get(i).getResumen());
-        }*/
-    //}
-    /**
-     * Comenta un artículo.
-     * @param indice El índice del artículo en la lista de artículos asignados.
-     * @param comentario El comentario a añadir.
-     */
+
     public void comentarArticulo(Articulo articulo, String comentario) {
         articulo.setComentarios(comentario);
     }
 
-
-
     /**
-     * Metodo que incrementa el número de artículos que ha revisado el revisor en uno.
+     * Acepta un articulo
+     * @param gestion Articulo que se gestiona
      */
-    public void incrementarArticulosRevisados() {
-        this.numArticulos++;
-    }
 
-    /**
-     * Acepta un artículo para revisión y actualiza el estado del artículo.
-     *
-     * @param articulo el artículo a aceptar
-     */
     public void aceptarArticulo(GestionarArticulo gestion) {
         gestion.incrementarAceptaciones();
         System.out.println("Articulo Aceptado");
     }
 
-
-
+    
     /**
-     * Rechaza un artículo para revisión y actualiza el estado del artículo.
-     *
-     * @param articulo el artículo a rechazar
+     * Rechaza un articulo
+     * @param gestion Archivo que se gestiona
      */
+
     public void rechazarArticulo(GestionarArticulo gestion) {
         gestion.incrementarRechazos();
         System.out.println("Articulo Rechazado");
     }
 
 
-    // Método para manejar opciones del revisor
+    /**
+     * Metodo para manejar las opciones del revisor
+     * @param ListaProcesos Es la lista de los procesos
+     * @param revisor Es el revisor que maneja las opciones
+     */
 
-    /*public static void manejarOpcionesRevisor(String archivoUsuarios, String archivoArticulos, Revisor revisor, ArrayList<GestionarArticulo> listaGestion) {
+    public static void manejarOpcionesRevisor(ArrayList<GestionarArticulo> listaProcesos, Revisor revisor) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<Articulo> articulos = Articulo.obtenerListaArticulos(archivoArticulos);
-
         while (true) {
-            System.out.println("************** OPCIONES DE REVISOR **************");
+            System.out.println("**************OPCIONES DE REVISOR**************");
             System.out.println("1. Ver artículos asignados");
-            System.out.println("2. Comentar artículo");
-            System.out.println("3. Aceptar artículo");
-            System.out.println("4. Rechazar artículo");
-            System.out.println("5. Salir");
-
+            System.out.println("2. Ver detalles de un artículo");
+            System.out.println("3. Comentar un artículo");
+            System.out.println("4. Aceptar un artículo");
+            System.out.println("5. Rechazar un artículo");
+            System.out.println("6. Salir");
+            System.out.println("Ingrese una opción:");
             int opcion = sc.nextInt();
-            sc.nextLine(); // consumir la nueva línea
+            sc.nextLine(); // Consume newline
+
+            if (opcion == 6) {
+                break;
+            }
 
             switch (opcion) {
                 case 1:
-                    for (Articulo articulo : revisor.getArticulosAsignados()) {
-                        System.out.println("Código: " + articulo.getCodigo());
-                        System.out.println("Resumen: " + articulo.getResumen());
-                        System.out.println("Estado: " + articulo.getEstadoArticulo());
-                        System.out.println("------------------------------");
+                    System.out.println("Artículos asignados:");
+                    for (GestionarArticulo proceso : listaProcesos) {
+                        if (proceso.revisores.contains(revisor)) {
+                            System.out.println("Código: " + proceso.articulo.getCodigo());
+                            System.out.println("Título: " + proceso.articulo.getResumen());
+                        }
                     }
                     break;
                 case 2:
                     System.out.println("Ingrese el código del artículo:");
                     String codigo = sc.nextLine();
-                    for (Articulo articulo : revisor.getArticulosAsignados()) {
-                        if (articulo.getCodigo().equals(codigo)) {
-                            System.out.println("Ingrese su comentario:");
-                            String comentario = sc.nextLine();
-                            revisor.comentarArticulo(articulo, comentario);
-                            Articulo.escribirArticulo(archivoArticulos, articulo);
-                            break;
-                        }
+                    GestionarArticulo proceso = buscarProcesoPorCodigo(listaProcesos, codigo, revisor);
+                    if (proceso != null) {
+                        Articulo articulo = proceso.articulo;
+                        System.out.println("Resumen: " + articulo.getResumen());
+                        System.out.println("Contenido: " + articulo.getContenido());
+                        System.out.println("Comentarios: " + articulo.getComentarios());
+                        System.out.println("Estado: " + articulo.getEstadoArticulo());
+                    } else {
+                        System.out.println("Artículo no encontrado.");
                     }
                     break;
                 case 3:
                     System.out.println("Ingrese el código del artículo:");
                     codigo = sc.nextLine();
-                    for (GestionarArticulo gestion : listaGestion) {
-                        if (gestion.getArticulo().getCodigo().equals(codigo) && revisor.getArticulosAsignados().contains(gestion.getArticulo())) {
-                            revisor.aceptarArticulo(gestion);
-                            Articulo.escribirArticulo(archivoArticulos, gestion.getArticulo());
-                            break;
-                        }
+                    proceso = buscarProcesoPorCodigo(listaProcesos, codigo, revisor);
+                    if (proceso != null) {
+                        System.out.println("Ingrese su comentario:");
+                        String comentario = sc.nextLine();
+                        revisor.comentarArticulo(proceso.articulo, comentario);
+                    } else {
+                        System.out.println("Artículo no encontrado.");
                     }
                     break;
                 case 4:
                     System.out.println("Ingrese el código del artículo:");
                     codigo = sc.nextLine();
-                    for (GestionarArticulo gestion : listaGestion) {
-                        if (gestion.getArticulo().getCodigo().equals(codigo) && revisor.getArticulosAsignados().contains(gestion.getArticulo())) {
-                            revisor.rechazarArticulo(gestion);
-                            Articulo.escribirArticulo(archivoArticulos, gestion.getArticulo());
-                            break;
-                        }
+                    proceso = buscarProcesoPorCodigo(listaProcesos, codigo, revisor);
+                    if (proceso != null) {
+                        revisor.aceptarArticulo(proceso);
+                    } else {
+                        System.out.println("Artículo no encontrado.");
                     }
                     break;
                 case 5:
-                    return;
+                    System.out.println("Ingrese el código del artículo:");
+                    codigo = sc.nextLine();
+                    proceso = buscarProcesoPorCodigo(listaProcesos, codigo, revisor);
+                    if (proceso != null) {
+                        revisor.rechazarArticulo(proceso);
+                    } else {
+                        System.out.println("Artículo no encontrado.");
+                    }
+                    break;
                 default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                    System.out.println("Opción no válida.");
                     break;
             }
         }
+        sc.close();
     }
 
     
+    /**
+     * Busca en la lista de procesos el articulo mediante el codigo
+     * @param listaProcesos Lista de procesos
+     * @param codigo Codigo del articulo
+     */
 
+    private static GestionarArticulo buscarProcesoPorCodigo(ArrayList<GestionarArticulo> listaProcesos, String codigo, Revisor revisor) {
+        for (GestionarArticulo proceso : listaProcesos) {
+            System.out.println(proceso);
+            if (proceso.articulo.getCodigo().equals(codigo) && proceso.revisores.contains(revisor)) {
+                return proceso;
+            }
+        }
+        return null;
+    }
 
     @Override
     public String toString() {
-        return "Revisor{" +
-                "nombre='" + getNombre() + '\'' +
-                ", apellido='" + getApellido() + '\'' +
-                ", correoElectronico='" + getCorreo() + '\'' +
-                ", especialidad='" + especialidad + '\'' +
-                ", usuario='" + usuario + '\'' +
-                ", contraseña='" + contraseña + '\'' +
-                ", numArticulos=" + numArticulos +
-                '}';
-    }*/
+        return "Revisor [especialidad=" + especialidad + ", usuario=" + usuario + ", nombre=" + nombre + ", contraseña="
+                + contraseña + ", apellido=" + apellido + ", numArticulos=" + numArticulos + ", correo=" + correo
+                + ", getUsuario()=" + getUsuario() + "]";
+    }
 
-
-
+    
 }
