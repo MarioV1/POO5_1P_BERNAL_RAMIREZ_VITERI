@@ -113,7 +113,8 @@ public class Revisor extends Usuario {
                     System.out.println("Artículos asignados:");
                     for (GestionarArticulo proceso : listaProcesos) {
                         for (Revisor r : proceso.revisores) {
-                            if (r.getUsuario()==revisor.getUsuario()) {
+
+                            if (r.getUsuario().equals(revisor.getUsuario())) {
                                 System.out.println("Código: " + proceso.articulo.getCodigo());
                                 System.out.println("Título: " + proceso.articulo.getResumen());
                             }

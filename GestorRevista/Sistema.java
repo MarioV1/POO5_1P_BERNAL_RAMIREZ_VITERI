@@ -88,7 +88,7 @@ public class Sistema {
         Usuario u3 = new Editor("Alejandra", "Castro", "acastro@hotmail.com", "UEES", "acastro", "acastro12");
         Usuario u4 = new Revisor("Juan", "Holguin", "jholguin@hotmail.com", "Matematicas", "holguin", "JH95", 4);
         Usuario u6 = new Revisor("Jose", "Holguin", "jholguin@hotmail.com", "Matematicas", "jolguin", "JH94", 4);
-        Usuario u7 = new Revisor("Julia", "Holguin", "jholguin@hotmail.com", "Matematicas", "jhlguin", "JH54", 4);
+        Usuario u7 = new Revisor("Julia", "Holguin", "jholguin@hotmail.com", "Matematicas", "jholguin", "JH54", 4);
         Usuario u8 = new Revisor("Juan Esteban", "Holguin", "jholguin@hotmail.com", "Matematicas", "jhoguin", "J954", 4);
         Usuario u9 = new Revisor("Julieta", "Holguin", "jholguin@hotmail.com", "Matematicas", "jholuin", "H954", 4);
         Usuario u10 = new Autor("Hector", "Morales", "hmorales@espol.edu.ec", "ESPOL", "Matematicas");
