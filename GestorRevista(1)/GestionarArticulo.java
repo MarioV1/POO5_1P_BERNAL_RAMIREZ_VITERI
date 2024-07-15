@@ -1,8 +1,8 @@
 
+import java.util.Random;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class GestionarArticulo {
     //Variables de instancia
@@ -69,26 +69,48 @@ public class GestionarArticulo {
      */
 
     public void decisionFinal(){
-        System.out.println("De acuerdo a los comentarios y decisiones de los autores");
-        Scanner sc = new Scanner(System.in);
+        
+        Random rd = new Random();
+        int decision = rd.nextInt(2);
 
-        System.out.println("¿Aceptar (A) o rechazar (R) el artículo?");
-        String opcion = sc.nextLine();
-
-        if (opcion.equalsIgnoreCase("a")) {
-            articulo.setEstadoAriculo(EstadoAriculo.ACEPTADO);
-            
-        }else if (opcion.equalsIgnoreCase("r")){
+        if (decision == 0){
             articulo.setEstadoAriculo(EstadoAriculo.RECHAZADO);
-        } else {
-            System.out.println("Opción inválida");
-        }
-
-        System.out.println("*****************************");
-        sc.close();
+        }else{
+            articulo.setEstadoAriculo(EstadoAriculo.ACEPTADO);
+        }    
     }
 
+    public Articulo getArticulo() {
+        return articulo;
+    }
 
+    public void setArticulo(Articulo articulo) {
+        this.articulo = articulo;
+    }
+
+    public ArrayList<Revisor> getRevisores() {
+        return revisores;
+    }
+
+    public void setRevisores(ArrayList<Revisor> revisores) {
+        this.revisores = revisores;
+    }
+
+    public Editor getEditor() {
+        return editor;
+    }
+
+    public void setEditor(Editor editor) {
+        this.editor = editor;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 
     /*public static int getId() {
         return id;
@@ -114,10 +136,7 @@ public class GestionarArticulo {
         this.rechazos = rechazos;
     }
 
-    /**
-     * @param nombreArchivo archivo sdonde se guarda la informacion de los procesos
-     * @param proceso proceso de revision que se guarda en el archivo txt
-     */
+
     public static void escribirProceso(String nombreArchivo, GestionarArticulo proceso){
         FileWriter fichero = null;
         BufferedWriter bw = null;
@@ -172,11 +191,7 @@ public class GestionarArticulo {
         }
     }
 
-    /**
-     * Parte de los datos primitivos en el txt de Revisiones para dar forma a una lista de Procesos de revision para que manejen otras metodos
-     * @param nombreArchivo archivo donde se guardan los procesos de revision
-     * @return devuelve una lista con los procesos de revision
-     */
+
     public static ArrayList<GestionarArticulo> obtenerListaProcesos(String nombreArchivo){
         ArrayList<String> lineas=ManejoArchivos.LeeFichero(nombreArchivo); 
         ArrayList<GestionarArticulo> listaProcesos=new ArrayList<>();

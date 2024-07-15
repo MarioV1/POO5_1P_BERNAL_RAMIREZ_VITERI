@@ -2,12 +2,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Sistema {
-
-    public static void inicio(String archivoUsuarios, String archivoArticulos, String archivoProcesos) {
+    
+    /**
+     * Este metodo es el que ejecuta el programa 
+     * @param archivoUsuarios archivo .txt donde se guardan los usuarios
+     * @param archivoArticulos archivo .txt donde se guardan los articulos
+     * @param listaProcesos lista de procesos donde se validan y modifican los datos necesarios, debe ser una lista para poder guardar cambios y escribir un txt nuevo con cada ejecucion
+     */
+    public static void inicio(String archivoUsuarios, String archivoArticulos, ArrayList<GestionarArticulo> listaProcesos) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Usuario> usuarios = Usuario.obtenerListaUsuarios(archivoUsuarios);
-        ArrayList<GestionarArticulo> listaProcesos = GestionarArticulo.obtenerListaProcesos(archivoProcesos);
-
         System.out.println("**************ARTÍCULOS CIENTÍFICOS**************");
         System.out.println("Escoja entre las opciones:\nS-Someter Articulo\nI-Iniciar Sesión");
         String opcion = sc.nextLine();
@@ -16,7 +20,7 @@ public class Sistema {
         if (opcion.equalsIgnoreCase("s")) {
             System.out.println("**************GESTOR DE PUBLICACIONES**************");
             System.out.println("SE DA PASO A LAS OPCIONES DE AUTOR");
-            Autor.someterArt(archivoArticulos, archivoUsuarios, archivoProcesos);
+            Autor.someterArt(archivoArticulos, archivoUsuarios, listaProcesos);
             System.out.println("-------------------------------------------------");
 
         } else if (opcion.equalsIgnoreCase("i")) {
@@ -61,27 +65,58 @@ public class Sistema {
         sc.close();
     }
 
-    public static boolean iniciarSesion(String usuario, String contraseña, ArrayList<Usuario> usuarios, String rol) {
-        for (Usuario u : usuarios) {
-            if (u instanceof Editor && rol.equals("Editor")) {
-                Editor editor = (Editor) u;
-                if (editor.getUsuario().equals(usuario) && editor.getContraseña().equals(contraseña)) {
-                    System.out.println("INGRESO EXITOSO");
-                    System.out.println("-------------------------------------------------");
-                    return true;
+    /**
+     * Método para validar las credenciales de Editores y Revisores
+     * @param usuario Ingresado por el usuario
+     * @param contraseña Ingresado por el usuario
+     * @param usuarios ArrayList con todos los usuarios de la base 
+     * @return Booleano en función de: El usuario existe ^ La contraseña es correcta
+     */
+    public static boolean iniciarSesion(String usuario, String contraseña,ArrayList<Usuario> usuarios, String rol){
+        for (Usuario u: usuarios) {
+            if(u.correo.contains(usuario)){
+                if (u.getClass()==Editor.class && rol=="Editor") {
+                    Editor editor=(Editor) u;
+                        if(editor.getUsuario().equals(usuario)){
+                            if(editor.getContraseña().equals(contraseña)){
+                                System.out.println("INGRESO EXITOSO");
+                                return true;
+                            }
+                            if(editor.getContraseña().equals(contraseña)==false){
+                                System.out.println("CONTRASEÑA INCORRECTA");
+                                return false;
+                            }
+                        }
+                        if(editor.getUsuario().equals(usuario)==false){
+                            System.out.println("USUARIO INEXISTENTE");
+                            return false;
+                        }
                 }
-            } else if (u instanceof Revisor && rol.equals("Revisor")) {
-                Revisor revisor = (Revisor) u;
-                if (revisor.getUsuario().equals(usuario) && revisor.getContraseña().equals(contraseña)) {
-                    System.out.println("INGRESO EXITOSO");
-                    System.out.println("-------------------------------------------------");
-                    return true;
-                }
+                if(u.getClass()==Revisor.class && rol=="Revisor"){
+                    Revisor revisor=(Revisor) u;
+                    if(revisor.getUsuario().equals(usuario)){
+                        if(revisor.getContraseña().equals(contraseña)){
+                            System.out.println("INGRESO EXITOSO");
+                            return true;
+                        }
+                        if(revisor.getContraseña().equals(contraseña)==false){
+                            System.out.println("CONTRASEÑA INCORRECTA");
+                            return false;
+                        }
+                    }
+                    if(revisor.getUsuario().equals(usuario)==false){
+                        System.out.println("USUARIO INEXISTENTE");
+                        return false;
+                    }
+                } 
+                System.out.println("ROL EQUIVOCADO");
+                return false;
             }
-        }
-        System.out.println("USUARIO O CONTRASEÑA INCORRECTOS");
-        return false;
     }
+    System.out.println("USUARIO INEXISTENTE");
+    return false;
+}
+
 
     public static void main(String[] args) {
         /* Sección de pruebas Mario Viteri */
@@ -107,12 +142,13 @@ public class Sistema {
         Usuario.EscribirUsuario("Usuarios.txt", u9);
         Usuario.EscribirUsuario("Usuarios.txt", u10);
         // PROGRAMA
-        inicio("Usuarios.txt", "Articulos.txt", "Procesos.txt");
+        ArrayList<GestionarArticulo> listaProcesos=new ArrayList<>(GestionarArticulo.obtenerListaProcesos("Revisiones.txt"));
+        inicio("Usuarios.txt", "Articulos.txt", listaProcesos);
         
-        ManejoArchivos.limpiarArchivo("Procesos.txt");
+        ManejoArchivos.limpiarArchivo("Revisiones.txt");
 
-        for(GestionarArticulo procesos : GestionarArticulo.obtenerListaProcesos("Procesos.txt")){
-            //ManejoArchivos.escribirArchivo("Procesos.txt", procesos);
+        for(GestionarArticulo proceso : listaProcesos){
+            GestionarArticulo.escribirProceso("Revisiones.txt", proceso);
         }
     }
 }
